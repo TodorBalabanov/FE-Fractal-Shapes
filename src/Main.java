@@ -11,6 +11,16 @@ import java.util.Arrays;
  */
 public class Main {
 	/**
+	 * How deep recursive calls to be.
+	 */
+	private static int DETAILS_LEVEL = 3;
+
+	/**
+	 * Side size of a cubic 3D space.
+	 */
+	private static int SPACE_SIDE_SIZE = (int) Math.pow(3, DETAILS_LEVEL);
+
+	/**
 	 * 3D space for the shape as discrete voxels.
 	 */
 	private static byte voxels[][][] = new byte[729][729][729];
@@ -109,141 +119,56 @@ public class Main {
 	 * @return String representation of STL commands.
 	 */
 	private static String cubeToSTL(int[] sides) {
-		String stl = 
-"   facet normal -1 0 0\r\n"+
-"      outer loop\r\n"+
-"         vertex %d %d %d\r\n"+
-"         vertex %d %d %d\r\n"+
-"         vertex %d %d %d\r\n"+
-"      endloop\r\n"+
-"   endfacet\r\n"+
-"   facet normal -1 0 0\r\n"+
-"      outer loop\r\n"+
-"         vertex %d %d %d\r\n"+
-"         vertex %d %d %d\r\n"+
-"         vertex %d %d %d\r\n"+
-"      endloop\r\n"+
-"   endfacet\r\n"+
-"   facet normal 0 0 1\r\n"+
-"      outer loop\r\n"+
-"         vertex %d %d %d\r\n"+
-"         vertex %d %d %d\r\n"+
-"         vertex %d %d %d\r\n"+
-"      endloop\r\n"+
-"   endfacet\r\n"+
-"   facet normal 0 0 1\r\n"+
-"      outer loop\r\n"+
-"         vertex %d %d %d\r\n"+
-"         vertex %d %d %d\r\n"+
-"         vertex %d %d %d\r\n"+
-"      endloop\r\n"+
-"   endfacet\r\n"+
-"   facet normal 1 0 0\r\n"+
-"      outer loop\r\n"+
-"         vertex %d %d %d\r\n"+
-"         vertex %d %d %d\r\n"+
-"         vertex %d %d %d\r\n"+
-"      endloop\r\n"+
-"   endfacet\r\n"+
-"   facet normal 1 0 0\r\n"+
-"      outer loop\r\n"+
-"         vertex %d %d %d\r\n"+
-"         vertex %d %d %d\r\n"+
-"         vertex %d %d %d\r\n"+
-"      endloop\r\n"+
-"   endfacet\r\n"+
-"   facet normal 0 0 -1\r\n"+
-"      outer loop\r\n"+
-"         vertex %d %d %d\r\n"+
-"         vertex %d %d %d\r\n"+
-"         vertex %d %d %d\r\n"+
-"      endloop\r\n"+
-"   endfacet\r\n"+
-"   facet normal 0 0 -1\r\n"+
-"      outer loop\r\n"+
-"         vertex %d %d %d\r\n"+
-"         vertex %d %d %d\r\n"+
-"         vertex %d %d %d\r\n"+
-"      endloop\r\n"+
-"   endfacet\r\n"+
-"   facet normal 0 1 0\r\n"+
-"      outer loop\r\n"+
-"         vertex %d %d %d\r\n"+
-"         vertex %d %d %d\r\n"+
-"         vertex %d %d %d\r\n"+
-"      endloop\r\n"+
-"   endfacet\r\n"+
-"   facet normal 0 1 0\r\n"+
-"      outer loop\r\n"+
-"         vertex %d %d %d\r\n"+
-"         vertex %d %d %d\r\n"+
-"         vertex %d %d %d\r\n"+
-"      endloop\r\n"+
-"   endfacet\r\n"+
-"   facet normal 0 -1 0\r\n"+
-"      outer loop\r\n"+
-"         vertex %d %d %d\r\n"+
-"         vertex %d %d %d\r\n"+
-"         vertex %d %d %d\r\n"+
-"      endloop\r\n"+
-"   endfacet\r\n"+
-"   facet normal 0 -1 0\r\n"+
-"      outer loop\r\n"+
-"         vertex %d %d %d\r\n"+
-"         vertex %d %d %d\r\n"+
-"         vertex %d %d %d\r\n"+
-"      endloop\r\n"+
-"   endfacet\r\n";
-		   
-		return String.format(stl, 
-				sides[0], sides[3], sides[5],
-				sides[0], sides[3], sides[4],
-				sides[0], sides[2], sides[5],
+		String stl = "   facet normal -1 0 0\r\n" + "      outer loop\r\n" + "         vertex %d %d %d\r\n"
+				+ "         vertex %d %d %d\r\n" + "         vertex %d %d %d\r\n" + "      endloop\r\n"
+				+ "   endfacet\r\n" + "   facet normal -1 0 0\r\n" + "      outer loop\r\n"
+				+ "         vertex %d %d %d\r\n" + "         vertex %d %d %d\r\n" + "         vertex %d %d %d\r\n"
+				+ "      endloop\r\n" + "   endfacet\r\n" + "   facet normal 0 0 1\r\n" + "      outer loop\r\n"
+				+ "         vertex %d %d %d\r\n" + "         vertex %d %d %d\r\n" + "         vertex %d %d %d\r\n"
+				+ "      endloop\r\n" + "   endfacet\r\n" + "   facet normal 0 0 1\r\n" + "      outer loop\r\n"
+				+ "         vertex %d %d %d\r\n" + "         vertex %d %d %d\r\n" + "         vertex %d %d %d\r\n"
+				+ "      endloop\r\n" + "   endfacet\r\n" + "   facet normal 1 0 0\r\n" + "      outer loop\r\n"
+				+ "         vertex %d %d %d\r\n" + "         vertex %d %d %d\r\n" + "         vertex %d %d %d\r\n"
+				+ "      endloop\r\n" + "   endfacet\r\n" + "   facet normal 1 0 0\r\n" + "      outer loop\r\n"
+				+ "         vertex %d %d %d\r\n" + "         vertex %d %d %d\r\n" + "         vertex %d %d %d\r\n"
+				+ "      endloop\r\n" + "   endfacet\r\n" + "   facet normal 0 0 -1\r\n" + "      outer loop\r\n"
+				+ "         vertex %d %d %d\r\n" + "         vertex %d %d %d\r\n" + "         vertex %d %d %d\r\n"
+				+ "      endloop\r\n" + "   endfacet\r\n" + "   facet normal 0 0 -1\r\n" + "      outer loop\r\n"
+				+ "         vertex %d %d %d\r\n" + "         vertex %d %d %d\r\n" + "         vertex %d %d %d\r\n"
+				+ "      endloop\r\n" + "   endfacet\r\n" + "   facet normal 0 1 0\r\n" + "      outer loop\r\n"
+				+ "         vertex %d %d %d\r\n" + "         vertex %d %d %d\r\n" + "         vertex %d %d %d\r\n"
+				+ "      endloop\r\n" + "   endfacet\r\n" + "   facet normal 0 1 0\r\n" + "      outer loop\r\n"
+				+ "         vertex %d %d %d\r\n" + "         vertex %d %d %d\r\n" + "         vertex %d %d %d\r\n"
+				+ "      endloop\r\n" + "   endfacet\r\n" + "   facet normal 0 -1 0\r\n" + "      outer loop\r\n"
+				+ "         vertex %d %d %d\r\n" + "         vertex %d %d %d\r\n" + "         vertex %d %d %d\r\n"
+				+ "      endloop\r\n" + "   endfacet\r\n" + "   facet normal 0 -1 0\r\n" + "      outer loop\r\n"
+				+ "         vertex %d %d %d\r\n" + "         vertex %d %d %d\r\n" + "         vertex %d %d %d\r\n"
+				+ "      endloop\r\n" + "   endfacet\r\n";
 
-				sides[0], sides[2], sides[5],
-				sides[0], sides[3], sides[4],
-				sides[0], sides[2], sides[4],
-				
-				sides[1], sides[3], sides[5],
-				sides[0], sides[3], sides[5],
-				sides[1], sides[2], sides[5],
-				
-				sides[1], sides[2], sides[5],
-				sides[0], sides[3], sides[5],
-				sides[0], sides[2], sides[5],
-				
-				sides[1], sides[3], sides[4],
-				sides[1], sides[3], sides[5],
-				sides[1], sides[2], sides[4],
-				
-				sides[1], sides[2], sides[4],
-				sides[1], sides[3], sides[5],
-				sides[1], sides[2], sides[5],
-				
-				sides[0], sides[3], sides[4],
-				sides[1], sides[3], sides[4],
-				sides[0], sides[2], sides[4],
+		return String.format(stl, sides[0], sides[3], sides[5], sides[0], sides[3], sides[4], sides[0], sides[2],
+				sides[5],
 
-				sides[0], sides[2], sides[4],
-				sides[1], sides[3], sides[4],
-				sides[1], sides[2], sides[4],
-				
-				sides[1], sides[3], sides[5],
-				sides[1], sides[3], sides[4],
-				sides[1], sides[3], sides[5],
-				
-				sides[0], sides[3], sides[5],
-				sides[1], sides[3], sides[4],
-				sides[0], sides[3], sides[4],
-				
-				sides[1], sides[2], sides[4],
-				sides[1], sides[2], sides[5],
-				sides[0], sides[2], sides[4],
-				
-				sides[0], sides[2], sides[4],
-				sides[1], sides[2], sides[5],
-				sides[0], sides[2], sides[5]
-			);
+				sides[0], sides[2], sides[5], sides[0], sides[3], sides[4], sides[0], sides[2], sides[4],
+
+				sides[1], sides[3], sides[5], sides[0], sides[3], sides[5], sides[1], sides[2], sides[5],
+
+				sides[1], sides[2], sides[5], sides[0], sides[3], sides[5], sides[0], sides[2], sides[5],
+
+				sides[1], sides[3], sides[4], sides[1], sides[3], sides[5], sides[1], sides[2], sides[4],
+
+				sides[1], sides[2], sides[4], sides[1], sides[3], sides[5], sides[1], sides[2], sides[5],
+
+				sides[0], sides[3], sides[4], sides[1], sides[3], sides[4], sides[0], sides[2], sides[4],
+
+				sides[0], sides[2], sides[4], sides[1], sides[3], sides[4], sides[1], sides[2], sides[4],
+
+				sides[1], sides[3], sides[5], sides[1], sides[3], sides[4], sides[0], sides[3], sides[5],
+
+				sides[0], sides[3], sides[5], sides[1], sides[3], sides[4], sides[0], sides[3], sides[4],
+
+				sides[1], sides[2], sides[4], sides[1], sides[2], sides[5], sides[0], sides[2], sides[4],
+
+				sides[0], sides[2], sides[4], sides[1], sides[2], sides[5], sides[0], sides[2], sides[5]);
 	}
 
 	/**
@@ -282,12 +207,12 @@ public class Main {
 	 *             Thrown if there is IO operation problem.
 	 */
 	public static void main(String[] args) throws IOException {
-		// cube(6, new int[] { 0, 728, 0, 728, 0, 728 });
-		// stl(new DataOutputStream(new FileOutputStream("cube.stl")));
+		cube(DETAILS_LEVEL, new int[] { 0, SPACE_SIDE_SIZE - 1, 0, SPACE_SIDE_SIZE - 1, 0, SPACE_SIDE_SIZE - 1 });
+		stl(new DataOutputStream(new FileOutputStream("~/Desktop/cube.stl")));
 		// stl(new DataOutputStream(System.out));
-		
-		System.out.println("solid Cube10x10x10x90x90x90");
-		System.out.print(cubeToSTL(new int[]{10,90,10,90,10,90}));
-		System.out.println("endsolid");
+
+		// System.out.println("solid Cube10x10x10x90x90x90");
+		// System.out.print(cubeToSTL(new int[] { 10, 90, 10, 90, 10, 90 }));
+		// System.out.println("endsolid");
 	}
 }
