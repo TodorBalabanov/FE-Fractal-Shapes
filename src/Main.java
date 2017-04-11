@@ -1,3 +1,7 @@
+import java.io.DataOutputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.Arrays;
 
 /**
@@ -55,7 +59,6 @@ public class Main {
 		if (level == 1) {
 			return;
 		}
-System.out.println(Arrays.toString(sides));
 
 		for (int index = 0, x = sides[0], dx = (sides[1] - sides[0] + 1) / 3; x < sides[1]; x += dx) {
 			for (int y = sides[2], dy = (sides[3] - sides[2] + 1) / 3; y < sides[3]; y += dy) {
@@ -98,13 +101,176 @@ System.out.println(Arrays.toString(sides));
 	}
 
 	/**
+	 * Transform cube sides to STL commands.
+	 * 
+	 * @param sides
+	 *            Coordinates of the cube sides.
+	 * 
+	 * @return String representation of STL commands.
+	 */
+	private static String cubeToSTL(int[] sides) {
+		String stl = 
+"   facet normal -1 0 0\r\n"+
+"      outer loop\r\n"+
+"         vertex %d %d %d\r\n"+
+"         vertex %d %d %d\r\n"+
+"         vertex %d %d %d\r\n"+
+"      endloop\r\n"+
+"   endfacet\r\n"+
+"   facet normal -1 0 0\r\n"+
+"      outer loop\r\n"+
+"         vertex %d %d %d\r\n"+
+"         vertex %d %d %d\r\n"+
+"         vertex %d %d %d\r\n"+
+"      endloop\r\n"+
+"   endfacet\r\n"+
+"   facet normal 0 0 1\r\n"+
+"      outer loop\r\n"+
+"         vertex %d %d %d\r\n"+
+"         vertex %d %d %d\r\n"+
+"         vertex %d %d %d\r\n"+
+"      endloop\r\n"+
+"   endfacet\r\n"+
+"   facet normal 0 0 1\r\n"+
+"      outer loop\r\n"+
+"         vertex %d %d %d\r\n"+
+"         vertex %d %d %d\r\n"+
+"         vertex %d %d %d\r\n"+
+"      endloop\r\n"+
+"   endfacet\r\n"+
+"   facet normal 1 0 0\r\n"+
+"      outer loop\r\n"+
+"         vertex %d %d %d\r\n"+
+"         vertex %d %d %d\r\n"+
+"         vertex %d %d %d\r\n"+
+"      endloop\r\n"+
+"   endfacet\r\n"+
+"   facet normal 1 0 0\r\n"+
+"      outer loop\r\n"+
+"         vertex %d %d %d\r\n"+
+"         vertex %d %d %d\r\n"+
+"         vertex %d %d %d\r\n"+
+"      endloop\r\n"+
+"   endfacet\r\n"+
+"   facet normal 0 0 -1\r\n"+
+"      outer loop\r\n"+
+"         vertex %d %d %d\r\n"+
+"         vertex %d %d %d\r\n"+
+"         vertex %d %d %d\r\n"+
+"      endloop\r\n"+
+"   endfacet\r\n"+
+"   facet normal 0 0 -1\r\n"+
+"      outer loop\r\n"+
+"         vertex %d %d %d\r\n"+
+"         vertex %d %d %d\r\n"+
+"         vertex %d %d %d\r\n"+
+"      endloop\r\n"+
+"   endfacet\r\n"+
+"   facet normal 0 1 0\r\n"+
+"      outer loop\r\n"+
+"         vertex %d %d %d\r\n"+
+"         vertex %d %d %d\r\n"+
+"         vertex %d %d %d\r\n"+
+"      endloop\r\n"+
+"   endfacet\r\n"+
+"   facet normal 0 1 0\r\n"+
+"      outer loop\r\n"+
+"         vertex %d %d %d\r\n"+
+"         vertex %d %d %d\r\n"+
+"         vertex %d %d %d\r\n"+
+"      endloop\r\n"+
+"   endfacet\r\n"+
+"   facet normal 0 -1 0\r\n"+
+"      outer loop\r\n"+
+"         vertex %d %d %d\r\n"+
+"         vertex %d %d %d\r\n"+
+"         vertex %d %d %d\r\n"+
+"      endloop\r\n"+
+"   endfacet\r\n"+
+"   facet normal 0 -1 0\r\n"+
+"      outer loop\r\n"+
+"         vertex %d %d %d\r\n"+
+"         vertex %d %d %d\r\n"+
+"         vertex %d %d %d\r\n"+
+"      endloop\r\n"+
+"   endfacet\r\n";
+		   
+		return String.format(stl, 
+				sides[0], sides[3], sides[5],
+				sides[0], sides[3], sides[4],
+				sides[0], sides[2], sides[5],
+
+				sides[0], sides[2], sides[5],
+				sides[0], sides[3], sides[4],
+				sides[0], sides[2], sides[4],
+				
+				sides[1], sides[3], sides[5],
+				sides[0], sides[3], sides[5],
+				sides[1], sides[2], sides[5],
+				
+				sides[1], sides[2], sides[5],
+				sides[0], sides[3], sides[5],
+				sides[0], sides[2], sides[5],
+				
+				sides[1], sides[3], sides[4],
+				sides[1], sides[3], sides[5],
+				sides[1], sides[2], sides[4],
+				
+				sides[1], sides[2], sides[4],
+				sides[1], sides[3], sides[5],
+				sides[1], sides[2], sides[5],
+				
+				sides[0], sides[3], sides[4],
+				sides[1], sides[3], sides[4],
+				sides[0], sides[2], sides[4],
+
+				sides[0], sides[2], sides[4],
+				sides[1], sides[3], sides[4],
+				sides[1], sides[2], sides[4],
+				
+				sides[1], sides[3], sides[5],
+				sides[1], sides[3], sides[4],
+				sides[1], sides[3], sides[5],
+				
+				sides[0], sides[3], sides[5],
+				sides[1], sides[3], sides[4],
+				sides[0], sides[3], sides[4],
+				
+				sides[1], sides[2], sides[4],
+				sides[1], sides[2], sides[5],
+				sides[0], sides[2], sides[4],
+				
+				sides[0], sides[2], sides[4],
+				sides[1], sides[2], sides[5],
+				sides[0], sides[2], sides[5]
+			);
+	}
+
+	/**
 	 * Save 3D space in a STL ASCII file.
 	 * 
-	 * @param string
-	 *            File name.
+	 * @param out
+	 *            Output stream.
+	 * 
+	 * @throws IOException
+	 *             Thrown if there is IO operation problem.
 	 */
-	private static void stl(String name) {
-		// TODO Save in STL format.
+	private static void stl(DataOutputStream out) throws IOException {
+		out.writeUTF("solid Shape" + System.currentTimeMillis());
+		out.writeUTF("\r\n");
+
+		for (int x = 0; x < voxels.length; x++) {
+			for (int y = 0; y < voxels[x].length; y++) {
+				for (int z = 0; z < voxels[x][y].length; z++) {
+					if (voxels[x][y][z] == 1) {
+						out.writeUTF(cubeToSTL(new int[] { x, x + 1, y, y + 1, z, z + 1 }));
+					}
+				}
+			}
+		}
+
+		out.writeUTF("endsolid");
+		out.writeUTF("\r\n");
 	}
 
 	/**
@@ -112,9 +278,16 @@ System.out.println(Arrays.toString(sides));
 	 * 
 	 * @param args
 	 *            Command line arguments.
+	 * @throws IOException
+	 *             Thrown if there is IO operation problem.
 	 */
-	public static void main(String[] args) {
-		cube(6, new int[] { 0, 728, 0, 728, 0, 728 });
-		stl("cube.stl");
+	public static void main(String[] args) throws IOException {
+		// cube(6, new int[] { 0, 728, 0, 728, 0, 728 });
+		// stl(new DataOutputStream(new FileOutputStream("cube.stl")));
+		// stl(new DataOutputStream(System.out));
+		
+		System.out.println("solid Cube10x10x10x90x90x90");
+		System.out.print(cubeToSTL(new int[]{10,90,10,90,10,90}));
+		System.out.println("endsolid");
 	}
 }
