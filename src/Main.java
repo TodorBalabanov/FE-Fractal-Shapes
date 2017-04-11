@@ -2,6 +2,8 @@ import java.io.DataOutputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
+import java.io.PrintWriter;
 import java.util.Arrays;
 
 /**
@@ -13,7 +15,7 @@ public class Main {
 	/**
 	 * How deep recursive calls to be.
 	 */
-	private static int DETAILS_LEVEL = 3;
+	private static int DETAILS_LEVEL = 4;
 
 	/**
 	 * Side size of a cubic 3D space.
@@ -23,7 +25,7 @@ public class Main {
 	/**
 	 * 3D space for the shape as discrete voxels.
 	 */
-	private static byte voxels[][][] = new byte[729][729][729];
+	private static byte voxels[][][] = new byte[SPACE_SIDE_SIZE][SPACE_SIDE_SIZE][SPACE_SIDE_SIZE];
 
 	/*
 	 * Initialize static members.
@@ -207,12 +209,22 @@ public class Main {
 	 *             Thrown if there is IO operation problem.
 	 */
 	public static void main(String[] args) throws IOException {
+		System.out.println("Start ...");
+		
 		cube(DETAILS_LEVEL, new int[] { 0, SPACE_SIDE_SIZE - 1, 0, SPACE_SIDE_SIZE - 1, 0, SPACE_SIDE_SIZE - 1 });
-		stl(new DataOutputStream(new FileOutputStream("~/Desktop/cube.stl")));
+
+		stl(new DataOutputStream(new FileOutputStream("./bin/cube.stl")));
 		// stl(new DataOutputStream(System.out));
 
-		// System.out.println("solid Cube10x10x10x90x90x90");
-		// System.out.print(cubeToSTL(new int[] { 10, 90, 10, 90, 10, 90 }));
-		// System.out.println("endsolid");
+		// DataOutputStream out = new DataOutputStream(new
+		// FileOutputStream("./bin/cube.stl"));
+		// DataOutputStream out = new DataOutputStream(System.out);
+		//
+		// out.writeUTF("solid Cube10x10x10x90x90x90\r\n");
+		// out.writeUTF(cubeToSTL(new int[] { 10, 90, 10, 90, 10, 90 }));
+		// out.writeUTF("endsolid\r\n");
+		
+		System.out.println("Stop ...");
+
 	}
 }
