@@ -1,13 +1,8 @@
 import java.io.BufferedWriter;
-import java.io.DataOutputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.OutputStream;
 import java.io.OutputStreamWriter;
-import java.io.PrintWriter;
 import java.io.Writer;
-import java.util.Arrays;
 
 /**
  * Main class for application start.
@@ -18,7 +13,7 @@ public class Main {
 	/**
 	 * How deep recursive calls to be.
 	 */
-	private static int DETAILS_LEVEL = 2;
+	private static int DETAILS_LEVEL = 4;
 
 	/**
 	 * Side size of a cubic 3D space.
@@ -86,6 +81,7 @@ public class Main {
 					case 5:
 					case 6:
 					case 7:
+					case 8:
 					case 9:
 					case 11:
 					case 15:
