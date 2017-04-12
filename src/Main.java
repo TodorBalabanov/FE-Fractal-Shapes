@@ -13,7 +13,7 @@ public class Main {
 	/**
 	 * How deep recursive calls to be.
 	 */
-	private static int DETAILS_LEVEL = 4;
+	private static int DETAILS_LEVEL = 5;
 
 	/**
 	 * Side size of a cubic 3D space.
