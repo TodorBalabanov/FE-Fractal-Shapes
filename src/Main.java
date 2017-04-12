@@ -18,7 +18,7 @@ public class Main {
 	/**
 	 * Side size of a cubic 3D space.
 	 */
-	private static int SPACE_SIDE_SIZE = (int) Math.pow(3, DETAILS_LEVEL);
+	private static int SPACE_SIDE_SIZE = (int) Math.pow(3, DETAILS_LEVEL-1);
 
 	/**
 	 * 3D space for the shape as discrete voxels.
@@ -70,9 +70,9 @@ public class Main {
 			return;
 		}
 
-		for (int index = 0, x = sides[0], dx = (sides[1] - sides[0] + 1) / 3; x < sides[1]; x += dx) {
-			for (int y = sides[2], dy = (sides[3] - sides[2] + 1) / 3; y < sides[3]; y += dy) {
-				for (int z = sides[4], dz = (sides[5] - sides[4] + 1) / 3; z < sides[5]; z += dz, index++) {
+		for (int index = 0, x = sides[0], dx = (sides[1] - sides[0] + 1) / 3; x <= sides[1]; x += dx) {
+			for (int y = sides[2], dy = (sides[3] - sides[2] + 1) / 3; y <= sides[3]; y += dy) {
+				for (int z = sides[4], dz = (sides[5] - sides[4] + 1) / 3; z <= sides[5]; z += dz, index++) {
 					switch (index) {
 					case 0:
 					case 1:
