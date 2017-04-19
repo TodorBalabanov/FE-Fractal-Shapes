@@ -13,12 +13,62 @@ public class Main {
 	/**
 	 * How deep recursive calls to be.
 	 */
-	private static int DETAILS_LEVEL = 5;
+	private static int DETAILS_LEVEL = 4;
+
+	/**
+	 * What part of the cube side will be density.
+	 */
+	private static int DENSITY_SIDE_SIZE = 2;
+
+	/**
+	 * What part of the cube side will be empty.
+	 */
+	private static int EMPTY_SIDE_SIZE = 3;
+
+	/**
+	 * What part of the cube side will be empty.
+	 */
+	private static byte SIDES_PATTERN[][][] = { 
+		{	{ 1, 1, 1, 1, 1 }, 
+			{ 1, 0, 0, 0, 1 }, 
+			{ 1, 0, 0, 0, 1 }, 
+			{ 1, 0, 0, 0, 1 }, 
+			{ 1, 1, 1, 1, 1 }, },
+
+		{ 	{ 1, 0, 0, 0, 1 }, 
+			{ 0, 0, 0, 0, 0 }, 
+			{ 0, 0, 0, 0, 0 }, 
+			{ 0, 0, 0, 0, 0 }, 
+			{ 1, 0, 0, 0, 1 }, },
+
+		{ 	{ 1, 0, 0, 0, 1 }, 
+			{ 0, 0, 0, 0, 0 }, 
+			{ 0, 0, 0, 0, 0 }, 
+			{ 0, 0, 0, 0, 0 }, 
+			{ 1, 0, 0, 0, 1 }, },
+
+		{ 	{ 1, 0, 0, 0, 1 }, 
+			{ 0, 0, 0, 0, 0 }, 
+			{ 0, 0, 0, 0, 0 }, 
+			{ 0, 0, 0, 0, 0 }, 
+			{ 1, 0, 0, 0, 1 }, },
+		
+		{	{ 1, 1, 1, 1, 1 }, 
+			{ 1, 0, 0, 0, 1 }, 
+			{ 1, 0, 0, 0, 1 }, 
+			{ 1, 0, 0, 0, 1 }, 
+			{ 1, 1, 1, 1, 1 }, },
+	};
+
+	/**
+	 * What part of the cube side will be empty.
+	 */
+	private static int TOTAL_SIDE_SIZE = DENSITY_SIDE_SIZE + EMPTY_SIDE_SIZE;
 
 	/**
 	 * Side size of a cubic 3D space.
 	 */
-	private static int SPACE_SIDE_SIZE = (int) Math.pow(3, DETAILS_LEVEL-1);
+	private static int SPACE_SIDE_SIZE = (int) Math.pow(TOTAL_SIDE_SIZE, DETAILS_LEVEL - 1);
 
 	/**
 	 * 3D space for the shape as discrete voxels.
@@ -70,41 +120,17 @@ public class Main {
 			return;
 		}
 
-		for (int index = 0, x = sides[0], dx = (sides[1] - sides[0] + 1) / 3; x <= sides[1]; x += dx) {
-			for (int y = sides[2], dy = (sides[3] - sides[2] + 1) / 3; y <= sides[3]; y += dy) {
-				for (int z = sides[4], dz = (sides[5] - sides[4] + 1) / 3; z <= sides[5]; z += dz, index++) {
-					switch (index) {
-					case 0:
-					case 1:
-					case 2:
-					case 3:
-					case 5:
-					case 6:
-					case 7:
-					case 8:
-					case 9:
-					case 11:
-					case 15:
-					case 17:
-					case 18:
-					case 19:
-					case 20:
-					case 21:
-					case 23:
-					case 24:
-					case 25:
-					case 26:
+		for (int x = sides[0], dx = (sides[1] - sides[0] + 1) / TOTAL_SIDE_SIZE; x <= sides[1]; x += dx) {
+			int a = (x - sides[0]) / (dx);
+			for (int y = sides[2], dy = (sides[3] - sides[2] + 1) / TOTAL_SIDE_SIZE; y <= sides[3]; y += dy) {
+				int b = (y - sides[2]) / (dy);
+				for (int z = sides[4], dz = (sides[5] - sides[4] + 1) / TOTAL_SIDE_SIZE; z <= sides[5]; z += dz) {
+					int c = (z - sides[4]) / (dz);
+
+					if (SIDES_PATTERN[a][b][c] == 1) {
 						cube(level - 1, new int[] { x, x + dx - 1, y, y + dy - 1, z, z + dz - 1 });
-						break;
-					case 4:
-					case 10:
-					case 12:
-					case 13:
-					case 14:
-					case 16:
-					case 22:
+					} else if (SIDES_PATTERN[a][b][c] == 0) {
 						warp(new int[] { x, x + dx - 1, y, y + dy - 1, z, z + dz - 1 });
-						break;
 					}
 				}
 			}
@@ -212,17 +238,19 @@ public class Main {
 
 		cube(DETAILS_LEVEL, new int[] { 0, SPACE_SIDE_SIZE - 1, 0, SPACE_SIDE_SIZE - 1, 0, SPACE_SIDE_SIZE - 1 });
 
-		stl(out = new BufferedWriter(new OutputStreamWriter(new FileOutputStream("./bin/cube.stl"), "UTF-8")));
+		stl(out = new BufferedWriter(new OutputStreamWriter(
+				new FileOutputStream("./bin/cube" + System.currentTimeMillis() + ".stl"), "UTF-8")));
 		out.flush();
 		out.close();
 
-//		out = new BufferedWriter(new OutputStreamWriter(new FileOutputStream("./bin/cube.stl"), "UTF-8"));
-//		out.write("solid Cube\n");
-//		out.write(cubeToSTL(new int[] { 10, 90, 10, 90, 10, 90 }));
-//		// out.write(cubeToSTL(new int[] { 0, 1, 0, 1, 0, 1 }));
-//		out.write("endsolid\n");
-//		out.flush();
-//		out.close();
+		// out = new BufferedWriter(new OutputStreamWriter(new
+		// FileOutputStream("./bin/cube.stl"), "UTF-8"));
+		// out.write("solid Cube\n");
+		// out.write(cubeToSTL(new int[] { 10, 90, 10, 90, 10, 90 }));
+		// // out.write(cubeToSTL(new int[] { 0, 1, 0, 1, 0, 1 }));
+		// out.write("endsolid\n");
+		// out.flush();
+		// out.close();
 
 		System.out.println("Stop ...");
 	}
