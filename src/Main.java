@@ -16,19 +16,26 @@ public class Main {
 	private static int DETAILS_LEVEL = 4;
 
 	/**
-	 * What part of the cube side will be density.
+	 * What part of the cube with side of size 5 will be empty.
 	 */
-	private static int DENSITY_SIDE_SIZE = 2;
+	private static byte SIDES_3_PATTERN[][][] = { 
+		{	{ 1, 1, 1 }, 
+			{ 1, 0, 1 }, 
+			{ 1, 1, 1 }, },
+
+		{ 	{ 1, 0, 1 }, 
+			{ 0, 0, 0 }, 
+			{ 1, 0, 1 }, },
+
+		{ 	{ 1, 1, 1 }, 
+			{ 1, 0, 1 }, 
+			{ 1, 1, 1 }, },
+	};
 
 	/**
-	 * What part of the cube side will be empty.
+	 * What part of the cube with side of size 5 will be empty.
 	 */
-	private static int EMPTY_SIDE_SIZE = 3;
-
-	/**
-	 * What part of the cube side will be empty.
-	 */
-	private static byte SIDES_PATTERN[][][] = { 
+	private static byte SIDES_5_PATTERN[][][] = { 
 		{	{ 1, 1, 1, 1, 1 }, 
 			{ 1, 0, 0, 0, 1 }, 
 			{ 1, 0, 0, 0, 1 }, 
@@ -61,14 +68,79 @@ public class Main {
 	};
 
 	/**
+	 * What part of the cube with side of size 5 will be empty.
+	 */
+	private static byte SIDES_7_PATTERN[][][] = { 
+		{	{ 1, 1, 1, 1, 1, 1, 1 }, 
+			{ 1, 0, 0, 0, 0, 0, 1 }, 
+			{ 1, 0, 0, 0, 0, 0, 1 }, 
+			{ 1, 0, 0, 0, 0, 0, 1 }, 
+			{ 1, 0, 0, 0, 0, 0, 1 }, 
+			{ 1, 0, 0, 0, 0, 0, 1 }, 
+			{ 1, 1, 1, 1, 1, 1, 1 }, },
+
+		{ 	{ 1, 0, 0, 0, 0, 0, 1 }, 
+			{ 0, 0, 0, 0, 0, 0, 0 }, 
+			{ 0, 0, 0, 0, 0, 0, 0 }, 
+			{ 0, 0, 0, 0, 0, 0, 0 }, 
+			{ 0, 0, 0, 0, 0, 0, 0 }, 
+			{ 0, 0, 0, 0, 0, 0, 0 }, 
+			{ 1, 0, 0, 0, 0, 0, 1 }, },
+
+		{ 	{ 1, 0, 0, 0, 0, 0, 1 }, 
+			{ 0, 0, 0, 0, 0, 0, 0 }, 
+			{ 0, 0, 0, 0, 0, 0, 0 }, 
+			{ 0, 0, 0, 0, 0, 0, 0 }, 
+			{ 0, 0, 0, 0, 0, 0, 0 }, 
+			{ 0, 0, 0, 0, 0, 0, 0 }, 
+			{ 1, 0, 0, 0, 0, 0, 1 }, },
+
+		{ 	{ 1, 0, 0, 0, 0, 0, 1 }, 
+			{ 0, 0, 0, 0, 0, 0, 0 }, 
+			{ 0, 0, 0, 0, 0, 0, 0 }, 
+			{ 0, 0, 0, 0, 0, 0, 0 }, 
+			{ 0, 0, 0, 0, 0, 0, 0 }, 
+			{ 0, 0, 0, 0, 0, 0, 0 }, 
+			{ 1, 0, 0, 0, 0, 0, 1 }, },
+
+		{ 	{ 1, 0, 0, 0, 0, 0, 1 }, 
+			{ 0, 0, 0, 0, 0, 0, 0 }, 
+			{ 0, 0, 0, 0, 0, 0, 0 }, 
+			{ 0, 0, 0, 0, 0, 0, 0 }, 
+			{ 0, 0, 0, 0, 0, 0, 0 }, 
+			{ 0, 0, 0, 0, 0, 0, 0 }, 
+			{ 1, 0, 0, 0, 0, 0, 1 }, },
+
+		{ 	{ 1, 0, 0, 0, 0, 0, 1 }, 
+			{ 0, 0, 0, 0, 0, 0, 0 }, 
+			{ 0, 0, 0, 0, 0, 0, 0 }, 
+			{ 0, 0, 0, 0, 0, 0, 0 }, 
+			{ 0, 0, 0, 0, 0, 0, 0 }, 
+			{ 0, 0, 0, 0, 0, 0, 0 }, 
+			{ 1, 0, 0, 0, 0, 0, 1 }, },
+
+		{	{ 1, 1, 1, 1, 1, 1, 1 }, 
+			{ 1, 0, 0, 0, 0, 0, 1 }, 
+			{ 1, 0, 0, 0, 0, 0, 1 }, 
+			{ 1, 0, 0, 0, 0, 0, 1 }, 
+			{ 1, 0, 0, 0, 0, 0, 1 }, 
+			{ 1, 0, 0, 0, 0, 0, 1 }, 
+			{ 1, 1, 1, 1, 1, 1, 1 }, },
+	};
+
+	/**
 	 * What part of the cube side will be empty.
 	 */
-	private static int TOTAL_SIDE_SIZE = DENSITY_SIDE_SIZE + EMPTY_SIDE_SIZE;
+	private static byte SIDES_PATTERNS[][][][] = { 
+		SIDES_7_PATTERN,
+		SIDES_5_PATTERN,
+		SIDES_3_PATTERN,
+	};
 
 	/**
 	 * Side size of a cubic 3D space.
 	 */
-	private static int SPACE_SIDE_SIZE = (int) Math.pow(TOTAL_SIDE_SIZE, DETAILS_LEVEL - 1);
+	private static int SPACE_SIDE_SIZE = 3 * 5 * 7;
 
 	/**
 	 * 3D space for the shape as discrete voxels.
@@ -120,16 +192,18 @@ public class Main {
 			return;
 		}
 
-		for (int x = sides[0], dx = (sides[1] - sides[0] + 1) / TOTAL_SIDE_SIZE; x <= sides[1]; x += dx) {
+		int pattern = level - 2;
+		int length = SIDES_PATTERNS[pattern][0].length;
+		for (int x = sides[0], dx = (sides[1] - sides[0] + 1) / length; x <= sides[1]; x += dx) {
 			int a = (x - sides[0]) / (dx);
-			for (int y = sides[2], dy = (sides[3] - sides[2] + 1) / TOTAL_SIDE_SIZE; y <= sides[3]; y += dy) {
+			for (int y = sides[2], dy = (sides[3] - sides[2] + 1) / length; y <= sides[3]; y += dy) {
 				int b = (y - sides[2]) / (dy);
-				for (int z = sides[4], dz = (sides[5] - sides[4] + 1) / TOTAL_SIDE_SIZE; z <= sides[5]; z += dz) {
+				for (int z = sides[4], dz = (sides[5] - sides[4] + 1) / length; z <= sides[5]; z += dz) {
 					int c = (z - sides[4]) / (dz);
 
-					if (SIDES_PATTERN[a][b][c] == 1) {
+					if (SIDES_PATTERNS[pattern][a][b][c] == 1) {
 						cube(level - 1, new int[] { x, x + dx - 1, y, y + dy - 1, z, z + dz - 1 });
-					} else if (SIDES_PATTERN[a][b][c] == 0) {
+					} else if (SIDES_PATTERNS[pattern][a][b][c] == 0) {
 						warp(new int[] { x, x + dx - 1, y, y + dy - 1, z, z + dz - 1 });
 					}
 				}
