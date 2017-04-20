@@ -3,6 +3,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
+import java.util.Arrays;
 
 /**
  * Main class for application start.
@@ -212,6 +213,31 @@ public class Main {
 	}
 
 	/**
+	 * Calculate volume of the 2D shape.
+	 * 
+	 * @return Array of values with the amount of empty space, amount of occupied space and total space.
+	 */
+	private static int[] volume() {
+		int counters[] = {0, 0, 0};
+		
+		for (int x = 0; x < voxels.length; x++) {
+			for (int y = 0; y < voxels[x].length; y++) {
+				for (int z = 0; z < voxels[x][y].length; z++) {
+					if(voxels[x][y][z] == 0) {
+						counters[0]++;
+					} else if(voxels[x][y][z] == 1) {
+						counters[1]++;
+					}
+					
+					counters[2]++;
+				}
+			}
+		}
+		
+		return counters;
+	}
+
+	/**
 	 * Transform cube sides to STL commands.
 	 * 
 	 * @param sides
@@ -312,19 +338,12 @@ public class Main {
 
 		cube(DETAILS_LEVEL, new int[] { 0, SPACE_SIDE_SIZE - 1, 0, SPACE_SIDE_SIZE - 1, 0, SPACE_SIDE_SIZE - 1 });
 
+		System.out.println("Volume: " + Arrays.toString(volume()));
+		
 		stl(out = new BufferedWriter(new OutputStreamWriter(
 				new FileOutputStream("./bin/cube" + System.currentTimeMillis() + ".stl"), "UTF-8")));
 		out.flush();
 		out.close();
-
-		// out = new BufferedWriter(new OutputStreamWriter(new
-		// FileOutputStream("./bin/cube.stl"), "UTF-8"));
-		// out.write("solid Cube\n");
-		// out.write(cubeToSTL(new int[] { 10, 90, 10, 90, 10, 90 }));
-		// // out.write(cubeToSTL(new int[] { 0, 1, 0, 1, 0, 1 }));
-		// out.write("endsolid\n");
-		// out.flush();
-		// out.close();
 
 		System.out.println("Stop ...");
 	}
