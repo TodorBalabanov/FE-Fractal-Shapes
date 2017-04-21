@@ -34,6 +34,31 @@ public class Main {
 	};
 
 	/**
+	 * What part of the cube with side of size 4 will be empty.
+	 */
+	private static byte SIDES_4_PATTERN[][][] = { 
+		{	{ 1, 1, 1, 1 }, 
+			{ 1, 0, 0, 1 }, 
+			{ 1, 0, 0, 1 }, 
+			{ 1, 1, 1, 1 }, },
+
+		{ 	{ 1, 0, 0, 1 }, 
+			{ 0, 0, 0, 0 }, 
+			{ 0, 0, 0, 0 }, 
+			{ 1, 0, 0, 1 }, },
+
+		{ 	{ 1, 0, 0, 1 }, 
+			{ 0, 0, 0, 0 }, 
+			{ 0, 0, 0, 0 }, 
+			{ 1, 0, 0, 1 }, },
+		
+		{	{ 1, 1, 1, 1 }, 
+			{ 1, 0, 0, 1 }, 
+			{ 1, 0, 0, 1 }, 
+			{ 1, 1, 1, 1 }, },
+	};
+
+	/**
 	 * What part of the cube with side of size 5 will be empty.
 	 */
 	private static byte SIDES_5_PATTERN[][][] = { 
@@ -66,6 +91,53 @@ public class Main {
 			{ 1, 0, 0, 0, 1 }, 
 			{ 1, 0, 0, 0, 1 }, 
 			{ 1, 1, 1, 1, 1 }, },
+	};
+
+	/**
+	 * What part of the cube with side of size 5 will be empty.
+	 */
+	private static byte SIDES_6_PATTERN[][][] = { 
+		{	{ 1, 1, 1, 1, 1, 1 }, 
+			{ 1, 0, 0, 0, 0, 1 }, 
+			{ 1, 0, 0, 0, 0, 1 }, 
+			{ 1, 0, 0, 0, 0, 1 }, 
+			{ 1, 0, 0, 0, 0, 1 }, 
+			{ 1, 1, 1, 1, 1, 1 }, },
+
+		{ 	{ 1, 0, 0, 0, 0, 1 }, 
+			{ 0, 0, 0, 0, 0, 0 }, 
+			{ 0, 0, 0, 0, 0, 0 }, 
+			{ 0, 0, 0, 0, 0, 0 }, 
+			{ 0, 0, 0, 0, 0, 0 }, 
+			{ 1, 0, 0, 0, 0, 1 }, },
+
+		{ 	{ 1, 0, 0, 0, 0, 1 }, 
+			{ 0, 0, 0, 0, 0, 0 }, 
+			{ 0, 0, 0, 0, 0, 0 }, 
+			{ 0, 0, 0, 0, 0, 0 }, 
+			{ 0, 0, 0, 0, 0, 0 }, 
+			{ 1, 0, 0, 0, 0, 1 }, },
+
+		{ 	{ 1, 0, 0, 0, 0, 1 }, 
+			{ 0, 0, 0, 0, 0, 0 }, 
+			{ 0, 0, 0, 0, 0, 0 }, 
+			{ 0, 0, 0, 0, 0, 0 }, 
+			{ 0, 0, 0, 0, 0, 0 }, 
+			{ 1, 0, 0, 0, 0, 1 }, },
+
+		{ 	{ 1, 0, 0, 0, 0, 1 }, 
+			{ 0, 0, 0, 0, 0, 0 }, 
+			{ 0, 0, 0, 0, 0, 0 }, 
+			{ 0, 0, 0, 0, 0, 0 }, 
+			{ 0, 0, 0, 0, 0, 0 }, 
+			{ 1, 0, 0, 0, 0, 1 }, },
+
+		{	{ 1, 1, 1, 1, 1, 1 }, 
+			{ 1, 0, 0, 0, 0, 1 }, 
+			{ 1, 0, 0, 0, 0, 1 }, 
+			{ 1, 0, 0, 0, 0, 1 }, 
+			{ 1, 0, 0, 0, 0, 1 }, 
+			{ 1, 1, 1, 1, 1, 1 }, },
 	};
 
 	/**
@@ -133,15 +205,15 @@ public class Main {
 	 * What part of the cube side will be empty.
 	 */
 	private static byte SIDES_PATTERNS[][][][] = { 
-		SIDES_7_PATTERN,
 		SIDES_5_PATTERN,
+		SIDES_4_PATTERN,
 		SIDES_3_PATTERN,
 	};
 
 	/**
 	 * Side size of a cubic 3D space.
 	 */
-	private static int SPACE_SIDE_SIZE = 3 * 5 * 7;
+	private static int SPACE_SIDE_SIZE = 3 * 4 * 5;
 
 	/**
 	 * 3D space for the shape as discrete voxels.
