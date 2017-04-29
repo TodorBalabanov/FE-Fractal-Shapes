@@ -16,11 +16,6 @@ import eu.printingin3d.javascad.vrl.export.StlTextFile;
  */
 public class Main {
 	/**
-	 * How deep recursive calls to be.
-	 */
-	private static int DETAILS_LEVEL = 4;
-
-	/**
 	 * What part of the cube with side of size 5 will be empty.
 	 */
 	private static byte SIDES_3_PATTERN[][][] = { 
@@ -215,9 +210,14 @@ public class Main {
 	};
 
 	/**
+	 * How deep recursive calls to be.
+	 */
+	private static int DETAILS_LEVEL = 2;
+
+	/**
 	 * Side size of a cubic 3D space.
 	 */
-	private static int SPACE_SIDE_SIZE = 3 * 4 * 5;
+	private static int SPACE_SIDE_SIZE = 5;// * 4 * 3;
 
 	/**
 	 * 3D space for the shape as discrete voxels.
@@ -412,7 +412,7 @@ public class Main {
 		for (int x = 0; x < voxels.length; x++) {
 			for (int y = 0; y < voxels[x].length; y++) {
 				for (int z = 0; z < voxels[x][y].length; z++) {
-					if (voxels[x][y][z] == 0) {
+					if (voxels[x][y][z] != 1) {
 						continue;
 					}
 					
