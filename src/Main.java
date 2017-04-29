@@ -1,9 +1,13 @@
-import java.io.BufferedWriter;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.util.Arrays;
+
+import eu.printingin3d.javascad.coords.Coords3d;
+import eu.printingin3d.javascad.coords.Dims3d;
+import eu.printingin3d.javascad.models.Abstract3dModel;
+import eu.printingin3d.javascad.models.Cube;
+import eu.printingin3d.javascad.vrl.export.StlTextFile;
 
 /**
  * Main class for application start.
@@ -397,6 +401,35 @@ public class Main {
 	}
 
 	/**
+	 * Transform voxels to 3D model in order to be saved as STL.
+	 * 
+	 * @return Complex 3D model.
+	 */
+	private static Abstract3dModel voxelsToModel() {
+		Abstract3dModel model = new Cube(new Dims3d(voxels.length, voxels[0].length, voxels[0][0].length));
+		
+		boolean first = true;
+		for (int x = 0; x < voxels.length; x++) {
+			for (int y = 0; y < voxels[x].length; y++) {
+				for (int z = 0; z < voxels[x][y].length; z++) {
+					if (voxels[x][y][z] == 0) {
+						continue;
+					}
+					
+					if(first == true) {
+						model = new Cube(1).move(new Coords3d(x, y, z));
+						first = false;
+					} else {
+						model = model.addModel((new Cube(1)).move(new Coords3d(x, y, z)));
+					}
+				}
+			}
+		}
+		
+		return model;
+	}
+	
+	/**
 	 * Single entry point.
 	 * 
 	 * @param args
@@ -405,18 +438,19 @@ public class Main {
 	 *             Thrown if there is IO operation problem.
 	 */
 	public static void main(String[] args) throws IOException {
-		Writer out = null;
 		System.out.println("Start ...");
 
 		cube(DETAILS_LEVEL, new int[] { 0, SPACE_SIDE_SIZE - 1, 0, SPACE_SIDE_SIZE - 1, 0, SPACE_SIDE_SIZE - 1 });
 
 		System.out.println("Volume: " + Arrays.toString(volume()));
-		
-		stl(out = new BufferedWriter(new OutputStreamWriter(
-				new FileOutputStream("./bin/cube" + System.currentTimeMillis() + ".stl"), "UTF-8")));
-		out.flush();
-		out.close();
 
+		/*
+		 * Use STL Java library for file saving.
+		 */
+		StlTextFile out = new StlTextFile( new FileOutputStream("./bin/cube" + System.currentTimeMillis() + ".stl") );
+		out.writeToFile(voxelsToModel().toCSG().toFacets());
+		out.close();
+		
 		System.out.println("Stop ...");
 	}
 }
