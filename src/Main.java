@@ -409,9 +409,9 @@ public class Main {
 		Abstract3dModel model = new Cube(new Dims3d(voxels.length, voxels[0].length, voxels[0][0].length));
 		
 		boolean first = true;
-		for (int x = 0, i=0; x < voxels.length; x++) {
+		for (int x = 0; x < voxels.length; x++) {
 			for (int y = 0; y < voxels[x].length; y++) {
-				for (int z = 0; z < voxels[x][y].length; z++, i++) {
+				for (int z = 0; z < voxels[x][y].length; z++) {
 					if (voxels[x][y][z] == 0) {
 						continue;
 					}
