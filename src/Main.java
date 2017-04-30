@@ -212,12 +212,12 @@ public class Main {
 	/**
 	 * How deep recursive calls to be.
 	 */
-	private static int DETAILS_LEVEL = 2;
+	private static int DETAILS_LEVEL = 4;
 
 	/**
 	 * Side size of a cubic 3D space.
 	 */
-	private static int SPACE_SIDE_SIZE = 5;// * 4 * 3;
+	private static int SPACE_SIDE_SIZE = 5 * 4 * 3;
 
 	/**
 	 * 3D space for the shape as discrete voxels.
@@ -409,18 +409,18 @@ public class Main {
 		Abstract3dModel model = new Cube(new Dims3d(voxels.length, voxels[0].length, voxels[0][0].length));
 		
 		boolean first = true;
-		for (int x = 0; x < voxels.length; x++) {
+		for (int x = 0, i=0; x < voxels.length; x++) {
 			for (int y = 0; y < voxels[x].length; y++) {
-				for (int z = 0; z < voxels[x][y].length; z++) {
-					if (voxels[x][y][z] != 1) {
+				for (int z = 0; z < voxels[x][y].length; z++, i++) {
+					if (voxels[x][y][z] == 0) {
 						continue;
 					}
 					
 					if(first == true) {
-						model = new Cube(1).move(new Coords3d(x, y, z));
+						model = new Cube(0.99).move(new Coords3d(x, y, z));
 						first = false;
 					} else {
-						model = model.addModel((new Cube(1)).move(new Coords3d(x, y, z)));
+						model = model.addModel((new Cube(0.99)).move(new Coords3d(x, y, z)));
 					}
 				}
 			}
