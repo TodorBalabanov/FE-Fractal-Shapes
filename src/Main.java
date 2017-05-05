@@ -1,6 +1,5 @@
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.Writer;
 import java.util.Arrays;
 
 import eu.printingin3d.javascad.coords.Coords3d;
