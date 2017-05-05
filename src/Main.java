@@ -216,7 +216,7 @@ public class Main {
 	/**
 	 * How deep recursive calls to be.
 	 */
-	private static final int DETAILS_LEVEL = 3;
+	private static final int DETAILS_LEVEL = 4;
 
 	/**
 	 * How deep recursive calls to be.
@@ -231,7 +231,7 @@ public class Main {
 	/**
 	 * Single voxel cube side.
 	 */
-	private static final double VOXEL_SIDE = VOXEL_SCALE - 0.0001;
+	private static final double VOXEL_SIDE = VOXEL_SCALE - 0.01;
 	
 	/**
 	 * 3D space for the shape as discrete voxels.
