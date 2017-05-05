@@ -356,7 +356,7 @@ public class Main {
 		
 		Abstract3dModel group = model;
 		for(int i=1; i<NUMBER_OF_CONSECUTIVE_DETAILS; i++) {
-			group = group.addModel(model.move(new Coords3d(0, 0, i*SPACE_SIDE_SIZE)));
+			group = group.addModel(model.move(new Coords3d(0, 0, i*SPACE_SIDE_SIZE*VOXEL_SCALE)));
 		}
 		model = group;
 		
