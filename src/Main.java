@@ -1,11 +1,17 @@
+import java.awt.Color;
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Arrays;
 
+import eu.printingin3d.javascad.context.ColorHandlingContext;
+import eu.printingin3d.javascad.context.IColorGenerationContext;
 import eu.printingin3d.javascad.coords.Coords3d;
 import eu.printingin3d.javascad.coords.Dims3d;
 import eu.printingin3d.javascad.models.Abstract3dModel;
 import eu.printingin3d.javascad.models.Cube;
+import eu.printingin3d.javascad.tranzitions.Colorize;
+import eu.printingin3d.javascad.utils.ModelToFile;
 import eu.printingin3d.javascad.vrl.export.StlBinaryFile;
 import eu.printingin3d.javascad.vrl.export.StlTextFile;
 
@@ -205,59 +211,67 @@ public class Main {
 	 */
 	private static final Object[] PARAMETERS = {
 //			/* Six details with recursive level of one. */
-//			6,
 //			1,
 //			(5),
 //			new byte[][][][]{SIDES_3_PATTERN},
 //			3.0,
 //			-0.01,
-			
-			/* Six details with recursive level of two. */
-			6,
-			2,
-			(5 * 4),
-			new byte[][][][]{SIDES_4_PATTERN, SIDES_3_PATTERN},
-			3.0,
-			-0.01,
-
-//			/* Six details with recursive level of three. */
 //			6,
-//			3,
-//			(5 * 4 * 3),
-//			new byte[][][][]{SIDES_5_PATTERN, SIDES_4_PATTERN, SIDES_3_PATTERN},
+//			new Color[]{Color.WHITE, Color.GREEN, Color.RED, Color.WHITE, Color.GREEN, Color.RED},
+			
+//			/* Six details with recursive level of two. */
+//			2,
+//			(5 * 4),
+//			new byte[][][][]{SIDES_4_PATTERN, SIDES_3_PATTERN},
 //			3.0,
 //			-0.01,
+//			6,
+//			new Color[]{Color.WHITE, Color.GREEN, Color.RED, Color.WHITE, Color.GREEN, Color.RED},
+
+			/* Six details with recursive level of three. */
+			3,
+			(5 * 4 * 3),
+			new byte[][][][]{SIDES_5_PATTERN, SIDES_4_PATTERN, SIDES_3_PATTERN},
+			3.0,
+			-0.01,
+			6,
+			new Color[]{Color.WHITE, Color.GREEN, Color.RED, Color.WHITE, Color.GREEN, Color.RED},
 	};
 
 	/**
 	 * How deep recursive calls to be.
 	 */
-	private static final int NUMBER_OF_CONSECUTIVE_DETAILS = (Integer)PARAMETERS[0];
-
-	/**
-	 * How deep recursive calls to be.
-	 */
-	private static final int RECURSIVE_DEPTH_LEVEL = (Integer)PARAMETERS[1];
+	private static final int RECURSIVE_DEPTH_LEVEL = (Integer)PARAMETERS[0];
 
 	/**
 	 * Side size of a cubic 3D space.
 	 */
-	private static final int SPACE_SIDE_SIZE = (Integer)PARAMETERS[2];
+	private static final int SPACE_SIDE_SIZE = (Integer)PARAMETERS[1];
 	
 	/**
 	 * What part of the cube side will be empty.
 	 */
-	private static final byte SIDES_PATTERNS[][][][] = (byte[][][][])PARAMETERS[3];
+	private static final byte SIDES_PATTERNS[][][][] = (byte[][][][])PARAMETERS[2];
 
 	/**
 	 * Single voxel cube size scale.
 	 */
-	private static final double VOXEL_SCALE = (Double)PARAMETERS[4];
+	private static final double VOXEL_SCALE = (Double)PARAMETERS[3];
 	
 	/**
 	 * Single voxel cube side.
 	 */
 	private static final double VOXEL_SIDE = VOXEL_SCALE + (Double)PARAMETERS[4];
+
+	/**
+	 * How deep recursive calls to be.
+	 */
+	private static final int NUMBER_OF_CONSECUTIVE_DETAILS = (Integer)PARAMETERS[5];
+	
+	/**
+	 * Colors of the consecutive details.
+	 */
+	private static final Color CONSECUTIVE_DETAILS_COLORS[] = (Color[]) PARAMETERS[6];
 	
 	/**
 	 * 3D space for the shape as discrete voxels.
@@ -379,9 +393,9 @@ public class Main {
 			}
 		}
 		
-		Abstract3dModel group = model;
+		Abstract3dModel group = new Colorize(CONSECUTIVE_DETAILS_COLORS[0], model);
 		for(int i=1; i<NUMBER_OF_CONSECUTIVE_DETAILS; i++) {
-			group = group.addModel(model.move(new Coords3d(0, 0, i*SPACE_SIDE_SIZE*VOXEL_SCALE)));
+			group = group.addModel( new Colorize(CONSECUTIVE_DETAILS_COLORS[i], model.move(new Coords3d(0, 0, i*SPACE_SIDE_SIZE*VOXEL_SCALE))) );
 		}
 		model = group;
 		
@@ -406,9 +420,11 @@ public class Main {
 		/*
 		 * Use STL Java library for file saving.
 		 */
-		StlBinaryFile out = new StlBinaryFile( new FileOutputStream("./bin/cube" + System.currentTimeMillis() + ".stl") );
-		out.writeToFile(voxelsToModel().toCSG().toFacets());
-		out.close();
+		//StlBinaryFile out = new StlBinaryFile( new FileOutputStream("./bin/cube" + System.currentTimeMillis() + ".stl") );
+		//out.writeToFile(voxelsToModel().toCSG().toFacets());
+		//out.close();
+		ModelToFile out = new ModelToFile( new File("./bin/cube" + System.currentTimeMillis() + ".scad") );
+		out.addModel( voxelsToModel() ).saveToFile( ColorHandlingContext.DEFAULT );
 		
 		System.out.println("Stop ...");
 	}
