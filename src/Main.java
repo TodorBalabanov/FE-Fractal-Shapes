@@ -200,38 +200,63 @@ public class Main {
 	};
 
 	/**
-	 * What part of the cube side will be empty.
+	 * All parameters in a single array.
 	 */
-	private static final byte SIDES_PATTERNS[][][][] = { 
-		SIDES_5_PATTERN,
-		SIDES_4_PATTERN,
-		SIDES_3_PATTERN,
+	private static final Object[] PARAMETERS = {
+//			/* Six details with recursive level of one. */
+//			6,
+//			1,
+//			(5),
+//			new byte[][][][]{SIDES_3_PATTERN},
+//			3.0,
+//			-0.01,
+			
+			/* Six details with recursive level of two. */
+			6,
+			2,
+			(5 * 4),
+			new byte[][][][]{SIDES_4_PATTERN, SIDES_3_PATTERN},
+			3.0,
+			-0.01,
+
+//			/* Six details with recursive level of three. */
+//			6,
+//			3,
+//			(5 * 4 * 3),
+//			new byte[][][][]{SIDES_5_PATTERN, SIDES_4_PATTERN, SIDES_3_PATTERN},
+//			3.0,
+//			-0.01,
 	};
+
+	/**
+	 * How deep recursive calls to be.
+	 */
+	private static final int NUMBER_OF_CONSECUTIVE_DETAILS = (Integer)PARAMETERS[0];
+
+	/**
+	 * How deep recursive calls to be.
+	 */
+	private static final int RECURSIVE_DEPTH_LEVEL = (Integer)PARAMETERS[1];
 
 	/**
 	 * Side size of a cubic 3D space.
 	 */
-	private static final int SPACE_SIDE_SIZE = 5 * 4 * 3;
-
+	private static final int SPACE_SIDE_SIZE = (Integer)PARAMETERS[2];
+	
 	/**
-	 * How deep recursive calls to be.
+	 * What part of the cube side will be empty.
 	 */
-	private static final int DETAILS_LEVEL = 4;
-
-	/**
-	 * How deep recursive calls to be.
-	 */
-	private static final int NUMBER_OF_CONSECUTIVE_DETAILS = 5;
+	private static final byte SIDES_PATTERNS[][][][] = (byte[][][][])PARAMETERS[3];
 
 	/**
 	 * Single voxel cube size scale.
 	 */
-	private static final double VOXEL_SCALE = 1.0;
+	private static final double VOXEL_SCALE = (Double)PARAMETERS[4];
 	
 	/**
 	 * Single voxel cube side.
 	 */
-	private static final double VOXEL_SIDE = VOXEL_SCALE - 0.01;
+	private static final double VOXEL_SIDE = VOXEL_SCALE + (Double)PARAMETERS[4];
 	
 	/**
 	 * 3D space for the shape as discrete voxels.
@@ -373,7 +398,7 @@ public class Main {
 	public static void main(String[] args) throws IOException {
 		System.out.println("Start ...");
 
-		cube(DETAILS_LEVEL, new int[] { 0, SPACE_SIDE_SIZE - 1, 0, SPACE_SIDE_SIZE - 1, 0, SPACE_SIDE_SIZE - 1 });
+		cube(RECURSIVE_DEPTH_LEVEL, new int[] { 0, SPACE_SIDE_SIZE - 1, 0, SPACE_SIDE_SIZE - 1, 0, SPACE_SIDE_SIZE - 1 });
 
 		System.out.println("Volume: " + Arrays.toString(volume()));
 
