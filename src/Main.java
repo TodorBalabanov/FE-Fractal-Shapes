@@ -6,6 +6,7 @@ import eu.printingin3d.javascad.coords.Coords3d;
 import eu.printingin3d.javascad.coords.Dims3d;
 import eu.printingin3d.javascad.models.Abstract3dModel;
 import eu.printingin3d.javascad.models.Cube;
+import eu.printingin3d.javascad.vrl.export.StlBinaryFile;
 import eu.printingin3d.javascad.vrl.export.StlTextFile;
 
 /**
@@ -405,7 +406,7 @@ public class Main {
 		/*
 		 * Use STL Java library for file saving.
 		 */
-		StlTextFile out = new StlTextFile( new FileOutputStream("./bin/cube" + System.currentTimeMillis() + ".stl") );
+		StlBinaryFile out = new StlBinaryFile( new FileOutputStream("./bin/cube" + System.currentTimeMillis() + ".stl") );
 		out.writeToFile(voxelsToModel().toCSG().toFacets());
 		out.close();
 		
