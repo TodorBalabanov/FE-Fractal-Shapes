@@ -246,23 +246,23 @@ public class Main {
 //			6,
 //			new Color[]{Color.WHITE, Color.GREEN, Color.RED, Color.WHITE, Color.GREEN, Color.RED},
 
-//			/* One detail with recursive level of four. */
-//			4,
-//			(3 * 4 * 5 * 6),
-//			new byte[][][][]{SIDES_3_PATTERN, SIDES_4_PATTERN, SIDES_5_PATTERN, SIDES_6_PATTERN},
-//			1.0,
-//			-0.01,
-//			1,
-//			new Color[]{Color.WHITE},
-
-			/* One detail with recursive level of three. */
-			3,
-			(3 * 4 * 5),
-			new byte[][][][]{SIDES_3_PATTERN, SIDES_4_PATTERN, SIDES_5_PATTERN},
+			/* One detail with recursive level of four. */
+			4,
+			(3 * 4 * 5 * 6),
+			new byte[][][][]{SIDES_3_PATTERN, SIDES_4_PATTERN, SIDES_5_PATTERN, SIDES_6_PATTERN},
 			1.0,
 			-0.01,
 			1,
 			new Color[]{Color.WHITE},
+
+//			/* One detail with recursive level of three. */
+//			3,
+//			(3 * 4 * 5),
+//			new byte[][][][]{SIDES_3_PATTERN, SIDES_4_PATTERN, SIDES_5_PATTERN},
+//			1.0,
+//			-0.01,
+//			1,
+//			new Color[]{Color.WHITE},
 	};
 
 	/**
