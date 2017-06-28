@@ -447,11 +447,11 @@ public class Main {
 		/*
 		 * Use STL Java library for file saving.
 		 */
-		//StlBinaryFile out = new StlBinaryFile( new FileOutputStream("./bin/cube" + System.currentTimeMillis() + ".stl") );
-		//out.writeToFile(voxelsToModel().toCSG().toFacets());
-		//out.close();
-		ModelToFile out = new ModelToFile( new File("./bin/cube" + System.currentTimeMillis() + ".scad") );
-		out.addModel( voxelsToModel() ).saveToFile( ColorHandlingContext.DEFAULT );
+		StlBinaryFile out = new StlBinaryFile( new FileOutputStream("./bin/cube" + System.currentTimeMillis() + ".stl") );
+		out.writeToFile(voxelsToModel().toCSG().toFacets());
+		out.close();
+		//ModelToFile out = new ModelToFile( new File("./bin/cube" + System.currentTimeMillis() + ".scad") );
+		//out.addModel( voxelsToModel() ).saveToFile( ColorHandlingContext.DEFAULT );
 		
 		System.out.println("Stop ...");
 	}
