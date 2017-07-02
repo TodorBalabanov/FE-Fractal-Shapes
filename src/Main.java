@@ -2,7 +2,9 @@ import java.awt.Color;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import eu.printingin3d.javascad.context.ColorHandlingContext;
 import eu.printingin3d.javascad.context.IColorGenerationContext;
@@ -12,6 +14,7 @@ import eu.printingin3d.javascad.models.Abstract3dModel;
 import eu.printingin3d.javascad.models.Cube;
 import eu.printingin3d.javascad.tranzitions.Colorize;
 import eu.printingin3d.javascad.utils.ModelToFile;
+import eu.printingin3d.javascad.vrl.CSG;
 import eu.printingin3d.javascad.vrl.export.StlBinaryFile;
 import eu.printingin3d.javascad.vrl.export.StlTextFile;
 
@@ -393,7 +396,7 @@ public class Main {
 		
 		return counters;
 	}
-
+	
 	/**
 	 * Transform voxels to 3D model in order to be saved as STL.
 	 * 
@@ -443,11 +446,11 @@ public class Main {
 		cube(RECURSIVE_DEPTH_LEVEL, new int[] { 0, SPACE_SIDE_SIZE - 1, 0, SPACE_SIDE_SIZE - 1, 0, SPACE_SIDE_SIZE - 1 });
 
 		System.out.println("Volume: " + Arrays.toString(volume()));
-
+		
 		/*
 		 * Use STL Java library for file saving.
 		 */
-		StlBinaryFile out = new StlBinaryFile( new FileOutputStream("./bin/cube" + System.currentTimeMillis() + ".stl") );
+		StlBinaryFile out = new StlBinaryFile( new FileOutputStream("./cube" + System.currentTimeMillis() + ".stl") );
 		out.writeToFile(voxelsToModel().toCSG().toFacets());
 		out.close();
 		//ModelToFile out = new ModelToFile( new File("./bin/cube" + System.currentTimeMillis() + ".scad") );
