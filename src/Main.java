@@ -271,23 +271,23 @@ public class Main {
 //			6,
 //			new Color[]{Color.WHITE, Color.GREEN, Color.RED, Color.WHITE, Color.GREEN, Color.RED},
 
-//			/* One detail with recursive level of three. */
-//			3,
-//			(3 * 4 * 5),
-//			new byte[][][][]{SIDES_3_PATTERN, SIDES_4_PATTERN, SIDES_5_PATTERN},
-//			1.0,
-//			+0.001,
-//			1,
-//			new Color[]{Color.WHITE},
-
-			/* One detail with recursive level of four. */
-			4,
-			(3 * 4 * 5 * 6),
-			new byte[][][][]{SIDES_3_PATTERN, SIDES_4_PATTERN, SIDES_5_PATTERN, SIDES_6_PATTERN},
+			/* One detail with recursive level of three. */
+			3,
+			(3 * 4 * 5),
+			new byte[][][][]{SIDES_3_PATTERN, SIDES_4_PATTERN, SIDES_5_PATTERN},
 			1.0,
 			+0.001,
 			1,
 			new Color[]{Color.WHITE},
+
+//			/* One detail with recursive level of four. */
+//			4,
+//			(3 * 4 * 5 * 6),
+//			new byte[][][][]{SIDES_3_PATTERN, SIDES_4_PATTERN, SIDES_5_PATTERN, SIDES_6_PATTERN},
+//			1.0,
+//			+0.001,
+//			1,
+//			new Color[]{Color.WHITE},
 	};
 
 	/**
@@ -526,12 +526,13 @@ public class Main {
 
 		cube(RECURSIVE_DEPTH_LEVEL, new int[] { 0, SPACE_SIDE_SIZE - 1, 0, SPACE_SIDE_SIZE - 1, 0, SPACE_SIDE_SIZE - 1 });
 
-		System.out.println("Volume: " + Arrays.toString(volume()));
+		int[] volumes = volume();
+		System.out.println("Volume: " + Arrays.toString(volumes));
 		
 		/*
 		 * Use STL Java library for file saving.
 		 */
-		StlBinaryFile out = new StlBinaryFile( new FileOutputStream("./cube" + System.currentTimeMillis() + ".stl") );
+		StlBinaryFile out = new StlBinaryFile( new FileOutputStream("./cube_" + "_" + volumes[0] + "_" + volumes[1] + "_" + volumes[2] + "_" + System.currentTimeMillis() + ".stl") );
 		//out.writeToFile(voxelsToModel().toCSG().toFacets());
 		out.writeToFile(voxelsToCSG().toFacets());
 		out.close();
