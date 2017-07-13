@@ -225,6 +225,33 @@ public class Main {
 //			+0.001,
 //			1,
 //			new Color[]{Color.WHITE},
+
+//			/* One detail with recursive level of one. */
+//			1,
+//			(5),
+//			new byte[][][][]{SIDES_5_PATTERN},
+//			3.0,
+//			+0.001,
+//			1,
+//			new Color[]{Color.WHITE},
+
+//			/* One detail with recursive level of one. */
+//			1,
+//			(6),
+//			new byte[][][][]{SIDES_6_PATTERN},
+//			3.0,
+//			+0.001,
+//			1,
+//			new Color[]{Color.WHITE},
+
+//			/* One detail with recursive level of one. */
+//			1,
+//			(7),
+//			new byte[][][][]{SIDES_7_PATTERN},
+//			3.0,
+//			+0.001,
+//			1,
+//			new Color[]{Color.WHITE},
 			
 //			/* Six details with recursive level of one. */
 //			1,
