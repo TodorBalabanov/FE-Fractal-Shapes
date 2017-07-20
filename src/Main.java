@@ -571,20 +571,35 @@ public class Main {
 		 */
 		StlBinaryFile out = new StlBinaryFile( new FileOutputStream("./cube_" + "_" + volumes[0] + "_" + volumes[1] + "_" + volumes[2] + "_" + System.currentTimeMillis() + ".stl") );
 
-		//out.writeToFile(voxelsToModel().toCSG().toFacets());
+		/*
+		 * Many voxels to STL storage.
+		 */ {
+			 //out.writeToFile(voxelsToModel().toCSG().toFacets());
+		}
 		
-		System.out.println("Shape calculated ...");
-		CSG csg = voxelsToCSG();
-		System.out.println("CSG calculated ...");
-		List<Facet> facets = csg.toFacets();
-		System.out.println("Facets calculated ...");
-		out.writeToFile(facets);
-		System.out.println("File written ...");
+		/*
+		 * Single shape to STL file storage.
+		 */ {
+			System.out.println("Shape calculated ...");
+			CSG csg = voxelsToCSG();
+			System.out.println("CSG calculated ...");
+			List<Facet> facets = csg.toFacets();
+			System.out.println("Facets calculated ...");
+			out.writeToFile(facets);
+			System.out.println("File written ...");
+		}
 		
+		/*
+		 * Close output file with buffer flush. 
+		 */
 		out.close();
 		
-		//ModelToFile out = new ModelToFile( new File("./bin/cube" + System.currentTimeMillis() + ".scad") );
-		//out.addModel( voxelsToModel() ).saveToFile( ColorHandlingContext.DEFAULT );
+		/*
+		 * Many voxels to SCAD file storage.
+		 */ {
+			//ModelToFile out = new ModelToFile( new File("./bin/cube" + System.currentTimeMillis() + ".scad") );
+			//out.addModel( voxelsToModel() ).saveToFile( ColorHandlingContext.DEFAULT );
+		}
 		
 		System.out.println("Stop ...");
 	}
