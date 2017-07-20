@@ -19,6 +19,7 @@ import eu.printingin3d.javascad.tranform.TransformationFactory;
 import eu.printingin3d.javascad.tranzitions.Colorize;
 import eu.printingin3d.javascad.utils.ModelToFile;
 import eu.printingin3d.javascad.vrl.CSG;
+import eu.printingin3d.javascad.vrl.Facet;
 import eu.printingin3d.javascad.vrl.export.StlBinaryFile;
 import eu.printingin3d.javascad.vrl.export.StlTextFile;
 
@@ -307,10 +308,19 @@ public class Main {
 //			1,
 //			new Color[]{Color.WHITE},
 
+//			/* One detail with recursive level of four. */
+//			4,
+//			(3 * 4 * 5 * 6),
+//			new byte[][][][]{SIDES_3_PATTERN, SIDES_4_PATTERN, SIDES_5_PATTERN, SIDES_6_PATTERN},
+//			1.0,
+//			+0.001,
+//			1,
+//			new Color[]{Color.WHITE},
+
 			/* One detail with recursive level of four. */
 			4,
-			(3 * 4 * 5 * 6),
-			new byte[][][][]{SIDES_3_PATTERN, SIDES_4_PATTERN, SIDES_5_PATTERN, SIDES_6_PATTERN},
+			(3 * 4 * 4 * 5),
+			new byte[][][][]{SIDES_3_PATTERN, SIDES_4_PATTERN, SIDES_4_PATTERN, SIDES_5_PATTERN},
 			1.0,
 			+0.001,
 			1,
@@ -560,8 +570,17 @@ public class Main {
 		 * Use STL Java library for file saving.
 		 */
 		StlBinaryFile out = new StlBinaryFile( new FileOutputStream("./cube_" + "_" + volumes[0] + "_" + volumes[1] + "_" + volumes[2] + "_" + System.currentTimeMillis() + ".stl") );
+
 		//out.writeToFile(voxelsToModel().toCSG().toFacets());
-		out.writeToFile(voxelsToCSG().toFacets());
+		
+		System.out.println("Shape calculated ...");
+		CSG csg = voxelsToCSG();
+		System.out.println("CSG calculated ...");
+		List<Facet> facets = csg.toFacets();
+		System.out.println("Facets calculated ...");
+		out.writeToFile(facets);
+		System.out.println("File written ...");
+		
 		out.close();
 		
 		//ModelToFile out = new ModelToFile( new File("./bin/cube" + System.currentTimeMillis() + ".scad") );
