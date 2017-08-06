@@ -549,6 +549,33 @@ public class Main {
 
 		return model;
 	}
+
+	/**
+	 * Generate cube as single slit body.
+	 * 
+	 * @param alpha Size of the cube side.
+	 * 
+	 * @param delta Size of the frame.
+	 */
+	private static void singleSlitBody(int alpha, int delta) {
+			voxels = new byte[alpha][alpha][alpha];
+			
+			for (int x = 0; x < voxels.length; x++) {
+				for (int y = 0; y < voxels[x].length; y++) {
+					for (int z = 0; z < voxels[x][y].length; z++) {
+						if((x == 0 || x == alpha-1) && (y == 0 || y == alpha-1)) {
+							voxels[x][y][z] = 1;
+						} else if((x == 0 || x == alpha-1) && (z == 0 || z == alpha-1)) {
+							voxels[x][y][z] = 1;
+						} else if((y == 0 || y == alpha-1) && (z == 0 || z == alpha-1)) {
+							voxels[x][y][z] = 1;
+						} else {
+							voxels[x][y][z] = 0;
+						}
+					}
+				}
+			}
+	}
 	
 	/**
 	 * Single entry point.
@@ -562,14 +589,15 @@ public class Main {
 		System.out.println("Start ...");
 
 		cube(RECURSIVE_DEPTH_LEVEL, new int[] { 0, SPACE_SIDE_SIZE - 1, 0, SPACE_SIDE_SIZE - 1, 0, SPACE_SIDE_SIZE - 1 });
-
+		//singleSlitBody(7, 1);
+		
 		int[] volumes = volume();
 		System.out.println("Volume: " + Arrays.toString(volumes));
 		
 		/*
 		 * Use STL Java library for file saving.
 		 */
-		StlBinaryFile out = new StlBinaryFile( new FileOutputStream("./cube_" + "_" + volumes[0] + "_" + volumes[1] + "_" + volumes[2] + "_" + System.currentTimeMillis() + ".stl") );
+		StlBinaryFile out = new StlBinaryFile( new FileOutputStream("./cube" + "_" + System.currentTimeMillis() + "_" + volumes[0] + "_" + volumes[1] + "_" + volumes[2] + ".stl") );
 
 		/*
 		 * Many voxels to STL storage.
