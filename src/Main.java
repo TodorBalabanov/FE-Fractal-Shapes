@@ -115,6 +115,7 @@ public class Main {
 	 * All parameters in a single array.
 	 */
 	private static final Object[] PARAMETERS = {
+
 			// /* One detail with recursive level of one. */
 			// 1,
 			// (3),
@@ -161,14 +162,9 @@ public class Main {
 			// new Color[]{Color.WHITE, Color.GREEN, Color.RED, Color.WHITE, Color.GREEN,
 			// Color.RED},
 
-			// /* One detail with recursive level of two. */
-			// 2,
-			// (4 * 3),
-			// new byte[][][][]{SIDES_4_PATTERN, SIDES_3_PATTERN},
-			// 3.0,
-			// +0.001,
-			// 1,
-			// new Color[]{Color.WHITE},
+			/* One detail with recursive level of two. */
+			2, (4 * 3), new byte[][][][] { SIDES_4_PATTERN, SIDES_3_PATTERN }, 3.0, +0.001, 1,
+			new Color[] { Color.WHITE },
 
 			// /* Six details with recursive level of two. */
 			// 2,
@@ -210,18 +206,16 @@ public class Main {
 			// new Color[]{Color.WHITE},
 
 			// /* One detail with recursive level of four. */
-			// 4,
-			// (3 * 4 * 5 * 6),
-			// new byte[][][][]{SIDES_3_PATTERN, SIDES_4_PATTERN, SIDES_5_PATTERN,
-			// SIDES_6_PATTERN},
-			// 1.0,
-			// +0.001,
-			// 1,
-			// new Color[]{Color.WHITE},
+			// 4, (3 * 4 * 5 * 6), new byte[][][][] { SIDES_3_PATTERN, SIDES_4_PATTERN,
+			// SIDES_5_PATTERN, SIDES_6_PATTERN },
+			// 1.0, +0.001, 1, new Color[] { Color.WHITE },
 
-			/* One detail with recursive level of four. */
-			4, (3 * 4 * 4 * 5), new byte[][][][] { SIDES_3_PATTERN, SIDES_4_PATTERN, SIDES_4_PATTERN, SIDES_5_PATTERN },
-			1.0, +0.001, 1, new Color[] { Color.WHITE }, };
+			// /* One detail with recursive level of four. */
+			// 4, (3 * 4 * 4 * 5), new byte[][][][] { SIDES_3_PATTERN, SIDES_4_PATTERN,
+			// SIDES_4_PATTERN, SIDES_5_PATTERN },
+			// 1.0, +0.001, 1, new Color[] { Color.WHITE },
+
+	};
 
 	/**
 	 * How deep recursive calls to be.
@@ -399,17 +393,30 @@ public class Main {
 	/**
 	 * Transform voxels to CSG data in order to be saved as STL.
 	 * 
+	 * @param sx
+	 *            Start x.
+	 * @param ex
+	 *            End x.
+	 * @param sy
+	 *            Start y.
+	 * @param ey
+	 *            End y.
+	 * @param sz
+	 *            Start z.
+	 * @param ez
+	 *            End z.
+	 * 
 	 * @return Complex 3D model.
 	 */
-	private static CSG voxelsToCSG() {
+	private static CSG voxelsToCSG(int sx, int ex, int sy, int ey, int sz, int ez) {
 		List<CSG> shapes = new ArrayList<CSG>();
 
 		/*
 		 * Transform all voxels in list of CSG cubes.
 		 */
-		for (int x = 0; x < voxels.length; x++) {
-			for (int y = 0; y < voxels[x].length; y++) {
-				for (int z = 0; z < voxels[x][y].length; z++) {
+		for (int x = sx; x < ex; x++) {
+			for (int y = sy; y < ey; y++) {
+				for (int z = sz; z < ez; z++) {
 					if (voxels[x][y][z] == 0) {
 						continue;
 					}
@@ -535,7 +542,7 @@ public class Main {
 		 * Single shape to STL file storage.
 		 */ {
 			System.out.println("Shape calculated ...");
-			CSG csg = voxelsToCSG();
+			CSG csg = voxelsToCSG(0, voxels.length, 0, voxels[0].length, 0, voxels[0][0].length);
 			System.out.println("CSG calculated ...");
 			List<Facet> facets = csg.toFacets();
 			System.out.println("Facets calculated ...");
