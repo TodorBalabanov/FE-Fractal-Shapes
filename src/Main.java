@@ -177,19 +177,19 @@ public class Main {
 			// new Color[]{Color.WHITE, Color.GREEN, Color.RED, Color.WHITE, Color.GREEN,
 			// Color.RED}, 1,
 
-			// /* One detail with recursive level of three. */
-			// 3, (3 * 4 * 5), new byte[][][][] { SIDES_3_PATTERN, SIDES_4_PATTERN,
-			// SIDES_5_PATTERN }, 1.0, +0.001, 1,
-			// new Color[] { Color.WHITE }, 27,
+			/* One detail with recursive level of three. */
+			3, (3 * 4 * 5), new byte[][][][] { SIDES_3_PATTERN, SIDES_4_PATTERN, SIDES_5_PATTERN }, 1.0, +0.001, 1,
+			new Color[] { Color.WHITE }, 1,
 
-//			/* One detail with recursive level of four. */
-//			4, (3 * 4 * 5 * 6), new byte[][][][] { SIDES_3_PATTERN, SIDES_4_PATTERN, SIDES_5_PATTERN, SIDES_6_PATTERN },
-//			1.0, +0.001, 1, new Color[] { Color.WHITE }, 27,
+			// /* One detail with recursive level of four. */
+			// 4, (3 * 4 * 5 * 6), new byte[][][][] { SIDES_3_PATTERN, SIDES_4_PATTERN,
+			// SIDES_5_PATTERN, SIDES_6_PATTERN },
+			// 1.0, +0.001, 1, new Color[] { Color.WHITE }, 27,
 
-			 /* One detail with recursive level of four. */
-			 4, (3 * 4 * 4 * 5), new byte[][][][] { SIDES_3_PATTERN, SIDES_4_PATTERN,
-			 SIDES_4_PATTERN, SIDES_5_PATTERN },
-			 1.0, +0.001, 1, new Color[] { Color.WHITE }, 64,
+			// /* One detail with recursive level of four. */
+			// 4, (3 * 4 * 4 * 5), new byte[][][][] { SIDES_3_PATTERN, SIDES_4_PATTERN,
+			// SIDES_4_PATTERN, SIDES_5_PATTERN },
+			// 1.0, +0.001, 1, new Color[] { Color.WHITE }, 1000,
 
 	};
 
@@ -535,9 +535,9 @@ public class Main {
 				for (int dz = (int) (voxels[0][0].length / Math.pow(SEGMENT_SIZE,
 						1D / 3D)), sz = 0, ez = dz; ez <= voxels[0][0].length; sz += dz, ez += dz, n++) {
 					CSG csg = voxelsToCSG(sx, ex, sy, ey, sz, ez);
-					System.out.println("CSG " + String.format("%4d", n) + " calculated ...");
+					System.out.println("CSG " + String.format("%04d", n) + " calculated ...");
 					List<Facet> facets = csg.toFacets();
-					System.out.println("Facets " + String.format("%4d", n) + " calculated ...");
+					System.out.println("Facets " + String.format("%04d", n) + " calculated ...");
 
 					/*
 					 * Use STL Java library for file saving.
@@ -556,7 +556,7 @@ public class Main {
 					 */
 					out.close();
 
-					System.out.println("File " + String.format("%4d", n) + " written ...");
+					System.out.println("File " + String.format("%04d", n) + " written ...");
 				}
 			}
 		}
