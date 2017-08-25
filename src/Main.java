@@ -20,6 +20,7 @@ import eu.printingin3d.javascad.tranzitions.Colorize;
 import eu.printingin3d.javascad.utils.ModelToFile;
 import eu.printingin3d.javascad.vrl.CSG;
 import eu.printingin3d.javascad.vrl.Facet;
+import eu.printingin3d.javascad.vrl.Polygon;
 import eu.printingin3d.javascad.vrl.export.StlBinaryFile;
 import eu.printingin3d.javascad.vrl.export.StlTextFile;
 
@@ -33,21 +34,15 @@ public class Main {
 	 * What part of the cube with side of size 5 will be empty.
 	 */
 	private static final byte SIDES_3_PATTERN[][][] = { { { 1, 1, 1 }, { 1, 0, 1 }, { 1, 1, 1 }, },
-
-			{ { 1, 0, 1 }, { 0, 0, 0 }, { 1, 0, 1 }, },
-
-			{ { 1, 1, 1 }, { 1, 0, 1 }, { 1, 1, 1 }, }, };
+			{ { 1, 0, 1 }, { 0, 0, 0 }, { 1, 0, 1 }, }, { { 1, 1, 1 }, { 1, 0, 1 }, { 1, 1, 1 }, }, };
 
 	/**
 	 * What part of the cube with side of size 4 will be empty.
 	 */
 	private static final byte SIDES_4_PATTERN[][][] = {
 			{ { 1, 1, 1, 1 }, { 1, 0, 0, 1 }, { 1, 0, 0, 1 }, { 1, 1, 1, 1 }, },
-
 			{ { 1, 0, 0, 1 }, { 0, 0, 0, 0 }, { 0, 0, 0, 0 }, { 1, 0, 0, 1 }, },
-
 			{ { 1, 0, 0, 1 }, { 0, 0, 0, 0 }, { 0, 0, 0, 0 }, { 1, 0, 0, 1 }, },
-
 			{ { 1, 1, 1, 1 }, { 1, 0, 0, 1 }, { 1, 0, 0, 1 }, { 1, 1, 1, 1 }, }, };
 
 	/**
@@ -55,13 +50,9 @@ public class Main {
 	 */
 	private static final byte SIDES_5_PATTERN[][][] = {
 			{ { 1, 1, 1, 1, 1 }, { 1, 0, 0, 0, 1 }, { 1, 0, 0, 0, 1 }, { 1, 0, 0, 0, 1 }, { 1, 1, 1, 1, 1 }, },
-
 			{ { 1, 0, 0, 0, 1 }, { 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0 }, { 1, 0, 0, 0, 1 }, },
-
 			{ { 1, 0, 0, 0, 1 }, { 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0 }, { 1, 0, 0, 0, 1 }, },
-
 			{ { 1, 0, 0, 0, 1 }, { 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0 }, { 1, 0, 0, 0, 1 }, },
-
 			{ { 1, 1, 1, 1, 1 }, { 1, 0, 0, 0, 1 }, { 1, 0, 0, 0, 1 }, { 1, 0, 0, 0, 1 }, { 1, 1, 1, 1, 1 }, }, };
 
 	/**
@@ -70,19 +61,14 @@ public class Main {
 	private static final byte SIDES_6_PATTERN[][][] = {
 			{ { 1, 1, 1, 1, 1, 1 }, { 1, 0, 0, 0, 0, 1 }, { 1, 0, 0, 0, 0, 1 }, { 1, 0, 0, 0, 0, 1 },
 					{ 1, 0, 0, 0, 0, 1 }, { 1, 1, 1, 1, 1, 1 }, },
-
 			{ { 1, 0, 0, 0, 0, 1 }, { 0, 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0, 0 },
 					{ 0, 0, 0, 0, 0, 0 }, { 1, 0, 0, 0, 0, 1 }, },
-
 			{ { 1, 0, 0, 0, 0, 1 }, { 0, 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0, 0 },
 					{ 0, 0, 0, 0, 0, 0 }, { 1, 0, 0, 0, 0, 1 }, },
-
 			{ { 1, 0, 0, 0, 0, 1 }, { 0, 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0, 0 },
 					{ 0, 0, 0, 0, 0, 0 }, { 1, 0, 0, 0, 0, 1 }, },
-
 			{ { 1, 0, 0, 0, 0, 1 }, { 0, 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0, 0 },
 					{ 0, 0, 0, 0, 0, 0 }, { 1, 0, 0, 0, 0, 1 }, },
-
 			{ { 1, 1, 1, 1, 1, 1 }, { 1, 0, 0, 0, 0, 1 }, { 1, 0, 0, 0, 0, 1 }, { 1, 0, 0, 0, 0, 1 },
 					{ 1, 0, 0, 0, 0, 1 }, { 1, 1, 1, 1, 1, 1 }, }, };
 
@@ -92,22 +78,16 @@ public class Main {
 	private static final byte SIDES_7_PATTERN[][][] = {
 			{ { 1, 1, 1, 1, 1, 1, 1 }, { 1, 0, 0, 0, 0, 0, 1 }, { 1, 0, 0, 0, 0, 0, 1 }, { 1, 0, 0, 0, 0, 0, 1 },
 					{ 1, 0, 0, 0, 0, 0, 1 }, { 1, 0, 0, 0, 0, 0, 1 }, { 1, 1, 1, 1, 1, 1, 1 }, },
-
 			{ { 1, 0, 0, 0, 0, 0, 1 }, { 0, 0, 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0, 0, 0 },
 					{ 0, 0, 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0, 0, 0 }, { 1, 0, 0, 0, 0, 0, 1 }, },
-
 			{ { 1, 0, 0, 0, 0, 0, 1 }, { 0, 0, 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0, 0, 0 },
 					{ 0, 0, 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0, 0, 0 }, { 1, 0, 0, 0, 0, 0, 1 }, },
-
 			{ { 1, 0, 0, 0, 0, 0, 1 }, { 0, 0, 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0, 0, 0 },
 					{ 0, 0, 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0, 0, 0 }, { 1, 0, 0, 0, 0, 0, 1 }, },
-
 			{ { 1, 0, 0, 0, 0, 0, 1 }, { 0, 0, 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0, 0, 0 },
 					{ 0, 0, 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0, 0, 0 }, { 1, 0, 0, 0, 0, 0, 1 }, },
-
 			{ { 1, 0, 0, 0, 0, 0, 1 }, { 0, 0, 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0, 0, 0 },
 					{ 0, 0, 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0, 0, 0 }, { 1, 0, 0, 0, 0, 0, 1 }, },
-
 			{ { 1, 1, 1, 1, 1, 1, 1 }, { 1, 0, 0, 0, 0, 0, 1 }, { 1, 0, 0, 0, 0, 0, 1 }, { 1, 0, 0, 0, 0, 0, 1 },
 					{ 1, 0, 0, 0, 0, 0, 1 }, { 1, 0, 0, 0, 0, 0, 1 }, { 1, 1, 1, 1, 1, 1, 1 }, }, };
 
@@ -123,7 +103,7 @@ public class Main {
 			// 3.0,
 			// +0.001,
 			// 1,
-			// new Color[]{Color.WHITE},
+			// new Color[]{Color.WHITE}, 1,
 
 			// /* One detail with recursive level of one. */
 			// 1,
@@ -132,7 +112,7 @@ public class Main {
 			// 3.0,
 			// +0.001,
 			// 1,
-			// new Color[]{Color.WHITE},
+			// new Color[]{Color.WHITE}, 1,
 
 			// /* One detail with recursive level of one. */
 			// 1,
@@ -141,7 +121,7 @@ public class Main {
 			// 3.0,
 			// +0.001,
 			// 1,
-			// new Color[]{Color.WHITE},
+			// new Color[]{Color.WHITE}, 1,
 
 			// /* One detail with recursive level of one. */
 			// 1,
@@ -150,7 +130,7 @@ public class Main {
 			// 3.0,
 			// +0.001,
 			// 1,
-			// new Color[]{Color.WHITE},
+			// new Color[]{Color.WHITE}, 1,
 
 			// /* Six details with recursive level of one. */
 			// 1,
@@ -160,11 +140,12 @@ public class Main {
 			// +0.001,
 			// 6,
 			// new Color[]{Color.WHITE, Color.GREEN, Color.RED, Color.WHITE, Color.GREEN,
-			// Color.RED},
+			// Color.RED}, 1,
 
-			/* One detail with recursive level of two. */
-			2, (4 * 3), new byte[][][][] { SIDES_4_PATTERN, SIDES_3_PATTERN }, 3.0, +0.001, 1,
-			new Color[] { Color.WHITE },
+			// /* One detail with recursive level of two. */
+			// 2, (4 * 3), new byte[][][][] { SIDES_4_PATTERN, SIDES_3_PATTERN }, 3.0,
+			// +0.001, 1,
+			// new Color[] { Color.WHITE }, 1,
 
 			// /* Six details with recursive level of two. */
 			// 2,
@@ -174,7 +155,7 @@ public class Main {
 			// -0.01,
 			// 6,
 			// new Color[]{Color.WHITE, Color.GREEN, Color.RED, Color.WHITE, Color.GREEN,
-			// Color.RED},
+			// Color.RED}, 1,
 
 			// /* Six details with recursive level of three. */
 			// 3,
@@ -184,7 +165,7 @@ public class Main {
 			// -0.01,
 			// 6,
 			// new Color[]{Color.WHITE, Color.GREEN, Color.RED, Color.WHITE, Color.GREEN,
-			// Color.RED},
+			// Color.RED}, 1,
 
 			// /* Six details with recursive level of three. */
 			// 3,
@@ -194,26 +175,21 @@ public class Main {
 			// -0.01,
 			// 6,
 			// new Color[]{Color.WHITE, Color.GREEN, Color.RED, Color.WHITE, Color.GREEN,
-			// Color.RED},
+			// Color.RED}, 1,
 
 			// /* One detail with recursive level of three. */
-			// 3,
-			// (3 * 4 * 5),
-			// new byte[][][][]{SIDES_3_PATTERN, SIDES_4_PATTERN, SIDES_5_PATTERN},
-			// 1.0,
-			// +0.001,
-			// 1,
-			// new Color[]{Color.WHITE},
+			// 3, (3 * 4 * 5), new byte[][][][] { SIDES_3_PATTERN, SIDES_4_PATTERN,
+			// SIDES_5_PATTERN }, 1.0, +0.001, 1,
+			// new Color[] { Color.WHITE }, 27,
 
-			// /* One detail with recursive level of four. */
-			// 4, (3 * 4 * 5 * 6), new byte[][][][] { SIDES_3_PATTERN, SIDES_4_PATTERN,
-			// SIDES_5_PATTERN, SIDES_6_PATTERN },
-			// 1.0, +0.001, 1, new Color[] { Color.WHITE },
+			/* One detail with recursive level of four. */
+			4, (3 * 4 * 5 * 6), new byte[][][][] { SIDES_3_PATTERN, SIDES_4_PATTERN, SIDES_5_PATTERN, SIDES_6_PATTERN },
+			1.0, +0.001, 1, new Color[] { Color.WHITE }, 27,
 
 			// /* One detail with recursive level of four. */
 			// 4, (3 * 4 * 4 * 5), new byte[][][][] { SIDES_3_PATTERN, SIDES_4_PATTERN,
 			// SIDES_4_PATTERN, SIDES_5_PATTERN },
-			// 1.0, +0.001, 1, new Color[] { Color.WHITE },
+			// 1.0, +0.001, 1, new Color[] { Color.WHITE }, 1,
 
 	};
 
@@ -257,6 +233,12 @@ public class Main {
 	 * Colors of the consecutive details.
 	 */
 	private static final Color CONSECUTIVE_DETAILS_COLORS[] = (Color[]) PARAMETERS[6];
+
+	/**
+	 * When the model is too big it will be saved with segments of a particular
+	 * size.
+	 */
+	private static final int SEGMENT_SIZE = (Integer) PARAMETERS[7];
 
 	/**
 	 * 3D space for the shape as discrete voxels.
@@ -449,6 +431,15 @@ public class Main {
 			}
 		}
 
+		/*
+		 * When the volume is empty there is a problem.
+		 */
+		if (shapes.isEmpty() == true) {
+			return new CSG(new ArrayList<Polygon>());
+		}
+
+		// TODO Find better way to multiply shapes.
+
 		CSG model = shapes.get(0).union(shapes.get(1));
 
 		CSG group = shapes.get(0).union(shapes.get(1));
@@ -523,14 +514,10 @@ public class Main {
 				new int[] { 0, SPACE_SIDE_SIZE - 1, 0, SPACE_SIDE_SIZE - 1, 0, SPACE_SIDE_SIZE - 1 });
 		// singleSlitBody(9, 1, 3);
 
+		System.out.println("Shape calculated ...");
+
 		int[] volumes = volume();
 		System.out.println("Volume: " + Arrays.toString(volumes));
-
-		/*
-		 * Use STL Java library for file saving.
-		 */
-		StlBinaryFile out = new StlBinaryFile(new FileOutputStream("./cube" + "_" + System.currentTimeMillis() + "_"
-				+ volumes[0] + "_" + volumes[1] + "_" + volumes[2] + ".stl"));
 
 		/*
 		 * Many voxels to STL storage.
@@ -540,20 +527,39 @@ public class Main {
 
 		/*
 		 * Single shape to STL file storage.
-		 */ {
-			System.out.println("Shape calculated ...");
-			CSG csg = voxelsToCSG(0, voxels.length, 0, voxels[0].length, 0, voxels[0][0].length);
-			System.out.println("CSG calculated ...");
-			List<Facet> facets = csg.toFacets();
-			System.out.println("Facets calculated ...");
-			out.writeToFile(facets);
-			System.out.println("File written ...");
-		}
-
-		/*
-		 * Close output file with buffer flush.
 		 */
-		out.close();
+		for (int n = 1, dx = (int) (voxels.length
+				/ Math.pow(SEGMENT_SIZE, 1D / 3D)), sx = 0, ex = dx; ex <= voxels.length; sx += dx, ex += dx) {
+			for (int dy = (int) (voxels[0].length
+					/ Math.pow(SEGMENT_SIZE, 1D / 3D)), sy = 0, ey = dy; ey <= voxels[0].length; sy += dy, ey += dy) {
+				for (int dz = (int) (voxels[0][0].length / Math.pow(SEGMENT_SIZE,
+						1D / 3D)), sz = 0, ez = dz; ez <= voxels[0][0].length; sz += dz, ez += dz, n++) {
+					CSG csg = voxelsToCSG(sx, ex, sy, ey, sz, ez);
+					System.out.println("CSG " + String.format("%4d", n) + " calculated ...");
+					List<Facet> facets = csg.toFacets();
+					System.out.println("Facets " + String.format("%4d", n) + " calculated ...");
+
+					/*
+					 * Use STL Java library for file saving.
+					 */
+					StlBinaryFile out = new StlBinaryFile(
+							new FileOutputStream("./cube" + "_" + System.currentTimeMillis() + "_" + volumes[0] + "_"
+									+ volumes[1] + "_" + volumes[2] + "_" + String.format("%4d", n) + ".stl"));
+
+					/*
+					 * Save model to file.
+					 */
+					out.writeToFile(facets);
+
+					/*
+					 * Close output file with buffer flush.
+					 */
+					out.close();
+
+					System.out.println("File " + String.format("%4d", n) + " written ...");
+				}
+			}
+		}
 
 		/*
 		 * Many voxels to SCAD file storage.
