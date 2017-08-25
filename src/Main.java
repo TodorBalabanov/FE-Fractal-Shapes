@@ -1,28 +1,21 @@
 import java.awt.Color;
-import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.List;
 
-import eu.printingin3d.javascad.context.ColorHandlingContext;
-import eu.printingin3d.javascad.context.IColorGenerationContext;
-import eu.printingin3d.javascad.coords.Abstract3d;
-import eu.printingin3d.javascad.coords.Basic3dFunc;
 import eu.printingin3d.javascad.coords.Coords3d;
 import eu.printingin3d.javascad.coords.Dims3d;
 import eu.printingin3d.javascad.models.Abstract3dModel;
 import eu.printingin3d.javascad.models.Cube;
-import eu.printingin3d.javascad.tranform.ITransformation;
 import eu.printingin3d.javascad.tranform.TransformationFactory;
 import eu.printingin3d.javascad.tranzitions.Colorize;
-import eu.printingin3d.javascad.utils.ModelToFile;
 import eu.printingin3d.javascad.vrl.CSG;
 import eu.printingin3d.javascad.vrl.Facet;
 import eu.printingin3d.javascad.vrl.Polygon;
 import eu.printingin3d.javascad.vrl.export.StlBinaryFile;
-import eu.printingin3d.javascad.vrl.export.StlTextFile;
 
 /**
  * Main class for application start.
@@ -139,12 +132,13 @@ public class Main {
 			// 3.0,
 			// +0.001,
 			// 6,
-			// new Color[]{Color.WHITE, Color.GREEN, Color.RED, Color.WHITE, Color.GREEN,
+			// new Color[]{Color.WHITE, Color.GREEN, Color.RED, Color.WHITE,
+			// Color.GREEN,
 			// Color.RED}, 1,
 
 			// /* One detail with recursive level of two. */
-			// 2, (4 * 3), new byte[][][][] { SIDES_4_PATTERN, SIDES_3_PATTERN }, 3.0,
-			// +0.001, 1,
+			// 2, (4 * 3), new byte[][][][] { SIDES_4_PATTERN, SIDES_3_PATTERN
+			// }, 3.0, +0.001, 1,
 			// new Color[] { Color.WHITE }, 1,
 
 			// /* Six details with recursive level of two. */
@@ -154,40 +148,46 @@ public class Main {
 			// 3.0,
 			// -0.01,
 			// 6,
-			// new Color[]{Color.WHITE, Color.GREEN, Color.RED, Color.WHITE, Color.GREEN,
+			// new Color[]{Color.WHITE, Color.GREEN, Color.RED, Color.WHITE,
+			// Color.GREEN,
 			// Color.RED}, 1,
 
 			// /* Six details with recursive level of three. */
 			// 3,
 			// (5 * 4 * 3),
-			// new byte[][][][]{SIDES_5_PATTERN, SIDES_4_PATTERN, SIDES_3_PATTERN},
+			// new byte[][][][]{SIDES_5_PATTERN, SIDES_4_PATTERN,
+			// SIDES_3_PATTERN},
 			// 3.0,
 			// -0.01,
 			// 6,
-			// new Color[]{Color.WHITE, Color.GREEN, Color.RED, Color.WHITE, Color.GREEN,
+			// new Color[]{Color.WHITE, Color.GREEN, Color.RED, Color.WHITE,
+			// Color.GREEN,
 			// Color.RED}, 1,
 
 			// /* Six details with recursive level of three. */
 			// 3,
 			// (6 * 5 * 4),
-			// new byte[][][][]{SIDES_6_PATTERN, SIDES_5_PATTERN, SIDES_4_PATTERN},
+			// new byte[][][][]{SIDES_6_PATTERN, SIDES_5_PATTERN,
+			// SIDES_4_PATTERN},
 			// 3.0,
 			// -0.01,
 			// 6,
-			// new Color[]{Color.WHITE, Color.GREEN, Color.RED, Color.WHITE, Color.GREEN,
+			// new Color[]{Color.WHITE, Color.GREEN, Color.RED, Color.WHITE,
+			// Color.GREEN,
 			// Color.RED}, 1,
 
-			/* One detail with recursive level of three. */
-			3, (3 * 4 * 5), new byte[][][][] { SIDES_3_PATTERN, SIDES_4_PATTERN, SIDES_5_PATTERN }, 1.0, +0.001, 1,
-			new Color[] { Color.WHITE }, 1,
+			// /* One detail with recursive level of three. */
+			// 3, (3 * 4 * 5), new byte[][][][] { SIDES_3_PATTERN,
+			// SIDES_4_PATTERN, SIDES_5_PATTERN }, 1.0, +0.001, 1,
+			// new Color[] { Color.WHITE }, 1,
+
+			/* One detail with recursive level of four. */
+			4, (3 * 4 * 5 * 6), new byte[][][][] { SIDES_3_PATTERN, SIDES_4_PATTERN, SIDES_5_PATTERN, SIDES_6_PATTERN },
+			1.0, +0.001, 1, new Color[] { Color.WHITE }, 27,
 
 			// /* One detail with recursive level of four. */
-			// 4, (3 * 4 * 5 * 6), new byte[][][][] { SIDES_3_PATTERN, SIDES_4_PATTERN,
-			// SIDES_5_PATTERN, SIDES_6_PATTERN },
-			// 1.0, +0.001, 1, new Color[] { Color.WHITE }, 27,
-
-			// /* One detail with recursive level of four. */
-			// 4, (3 * 4 * 4 * 5), new byte[][][][] { SIDES_3_PATTERN, SIDES_4_PATTERN,
+			// 4, (3 * 4 * 4 * 5), new byte[][][][] { SIDES_3_PATTERN,
+			// SIDES_4_PATTERN,
 			// SIDES_4_PATTERN, SIDES_5_PATTERN },
 			// 1.0, +0.001, 1, new Color[] { Color.WHITE }, 1000,
 
@@ -214,8 +214,8 @@ public class Main {
 	private static final double VOXEL_SCALE = (Double) PARAMETERS[3];
 
 	/**
-	 * Space between two voxels. If it is negative there is space, if it is positive
-	 * there is overlap.
+	 * Space between two voxels. If it is negative there is space, if it is
+	 * positive there is overlap.
 	 */
 	private static final double VOXEL_DELTA = (Double) PARAMETERS[4];
 
@@ -311,8 +311,8 @@ public class Main {
 	/**
 	 * Calculate volume of the 2D shape.
 	 * 
-	 * @return Array of values with the amount of empty space, amount of occupied
-	 *         space and total space.
+	 * @return Array of values with the amount of empty space, amount of
+	 *         occupied space and total space.
 	 */
 	private static int[] volume() {
 		int counters[] = { 0, 0, 0 };
@@ -391,7 +391,7 @@ public class Main {
 	 * @return Complex 3D model.
 	 */
 	private static CSG voxelsToCSG(int sx, int ex, int sy, int ey, int sz, int ez) {
-		List<CSG> shapes = new ArrayList<CSG>();
+		List<CSG> shapes = new LinkedList<CSG>();
 
 		/*
 		 * Transform all voxels in list of CSG cubes.
@@ -425,7 +425,7 @@ public class Main {
 				 */
 				shapes.remove(j);
 				shapes.remove(i);
-				shapes.add(0, union);
+				shapes.add(union);
 				i = j = 0;
 				continue loop;
 			}
@@ -566,7 +566,8 @@ public class Main {
 		 */ {
 			// ModelToFile out = new ModelToFile( new File("./bin/cube" +
 			// System.currentTimeMillis() + ".scad") );
-			// out.addModel( voxelsToModel() ).saveToFile( ColorHandlingContext.DEFAULT );
+			// out.addModel( voxelsToModel() ).saveToFile(
+			// ColorHandlingContext.DEFAULT );
 		}
 
 		System.out.println("Stop ...");
