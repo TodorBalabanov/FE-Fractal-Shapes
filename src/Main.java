@@ -181,8 +181,13 @@ public class Main {
 			// SIDES_3_PATTERN }, 1.0, +0.001, 1,
 			// new Color[] { Color.WHITE }, 1,
 
+			// /* One detail with recursive level of three. */
+			// 3, (7 * 5 * 3), new byte[][][][] { SIDES_7_PATTERN, SIDES_5_PATTERN,
+			// SIDES_3_PATTERN }, 1.0, +0.001, 1,
+			// new Color[] { Color.WHITE }, 1,
+
 			/* One detail with recursive level of three. */
-			3, (7 * 5 * 3), new byte[][][][] { SIDES_7_PATTERN, SIDES_5_PATTERN, SIDES_3_PATTERN }, 1.0, +0.001, 1,
+			3, (3 * 5 * 7), new byte[][][][] { SIDES_3_PATTERN, SIDES_5_PATTERN, SIDES_7_PATTERN }, 1.0, +0.001, 1,
 			new Color[] { Color.WHITE }, 1,
 
 			// /* One detail with recursive level of four. */
@@ -568,7 +573,7 @@ public class Main {
 					 */
 					StlBinaryFile out = new StlBinaryFile(
 							new FileOutputStream("./cube" + "_" + System.currentTimeMillis() + "_" + volumes[0] + "_"
-									+ volumes[1] + "_" + volumes[2] + "_" + String.format("%4d", n) + ".stl"));
+									+ volumes[1] + "_" + volumes[2] + "_" + String.format("%04d", n) + ".stl"));
 
 					/*
 					 * Save model to file.
