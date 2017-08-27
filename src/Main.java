@@ -183,7 +183,12 @@ public class Main {
 
 			/* One detail with recursive level of four. */
 			4, (3 * 4 * 5 * 6), new byte[][][][] { SIDES_3_PATTERN, SIDES_4_PATTERN, SIDES_5_PATTERN, SIDES_6_PATTERN },
-			1.0, +0.001, 1, new Color[] { Color.WHITE }, 27,
+			1.0, +0.001, 1, new Color[] { Color.WHITE }, 1,
+
+			// /* One detail with recursive level of four. */
+			// 4, (6 * 5 * 4 * 3), new byte[][][][] { SIDES_6_PATTERN, SIDES_5_PATTERN,
+			// SIDES_4_PATTERN, SIDES_3_PATTERN },
+			// 1.0, +0.001, 1, new Color[] { Color.WHITE }, 27,
 
 			// /* One detail with recursive level of four. */
 			// 4, (3 * 4 * 4 * 5), new byte[][][][] { SIDES_3_PATTERN,
@@ -214,8 +219,8 @@ public class Main {
 	private static final double VOXEL_SCALE = (Double) PARAMETERS[3];
 
 	/**
-	 * Space between two voxels. If it is negative there is space, if it is
-	 * positive there is overlap.
+	 * Space between two voxels. If it is negative there is space, if it is positive
+	 * there is overlap.
 	 */
 	private static final double VOXEL_DELTA = (Double) PARAMETERS[4];
 
@@ -290,6 +295,9 @@ public class Main {
 			return;
 		}
 
+		// TODO Да се модифицира рекурсивната процедура, така че вътрешните стени на
+		// кубовете да не бъдат двойни, а да бъдат единични.
+
 		int length = SIDES_PATTERNS[level - 1][0].length;
 		for (int x = sides[0], dx = (sides[1] - sides[0] + 1) / length; x <= sides[1]; x += dx) {
 			int a = (x - sides[0]) / (dx);
@@ -311,8 +319,8 @@ public class Main {
 	/**
 	 * Calculate volume of the 2D shape.
 	 * 
-	 * @return Array of values with the amount of empty space, amount of
-	 *         occupied space and total space.
+	 * @return Array of values with the amount of empty space, amount of occupied
+	 *         space and total space.
 	 */
 	private static int[] volume() {
 		int counters[] = { 0, 0, 0 };
@@ -391,14 +399,23 @@ public class Main {
 	 * @return Complex 3D model.
 	 */
 	private static CSG voxelsToCSG(int sx, int ex, int sy, int ey, int sz, int ez) {
+		final long INTERVAL = 5 * 60 * 1000;
+		long print = 0;
+
 		List<CSG> shapes = new LinkedList<CSG>();
 
 		/*
 		 * Transform all voxels in list of CSG cubes.
 		 */
-		for (int x = sx; x < ex; x++) {
+		print = System.currentTimeMillis();
+		for (int x = sx, size = (ex - sx + 1) * (ey - sy + 1) * (ez - sz + 1), n = 0; x < ex; x++) {
 			for (int y = sy; y < ey; y++) {
-				for (int z = sz; z < ez; z++) {
+				for (int z = sz; z < ez; z++, n++) {
+					if (print < System.currentTimeMillis()) {
+						System.err.format("Cubes : %04.2f%%\r\n", 100D * shapes.size() / size);
+						print = System.currentTimeMillis() + INTERVAL;
+					}
+
 					if (voxels[x][y][z] == 0) {
 						continue;
 					}
@@ -413,7 +430,13 @@ public class Main {
 		/*
 		 * Union shape by shape.
 		 */
-		loop: for (int i = 0; i < shapes.size(); i++) {
+		print = System.currentTimeMillis();
+		loop: for (int i = 0, size = shapes.size(); i < shapes.size(); i++) {
+			if (print < System.currentTimeMillis()) {
+				System.err.format("Union : %04.2f%%\r\n", 100D * shapes.size() / size);
+				print = System.currentTimeMillis() + INTERVAL;
+			}
+
 			for (int j = i + 1; j < shapes.size(); j++) {
 				CSG union = shapes.get(i).union(shapes.get(j));
 				if (union.toFacets().size() == 0) {
