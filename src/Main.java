@@ -137,20 +137,15 @@ public class Main {
 			// Color.RED}, 1,
 
 			// /* One detail with recursive level of two. */
-			// 2, (4 * 3), new byte[][][][] { SIDES_4_PATTERN, SIDES_3_PATTERN
-			// }, 3.0, +0.001, 1,
+			// 2, (4 * 3), new byte[][][][] { SIDES_4_PATTERN, SIDES_3_PATTERN }, 3.0,
+			// +0.001, 1,
 			// new Color[] { Color.WHITE }, 1,
 
 			// /* Six details with recursive level of two. */
-			// 2,
-			// (4 * 3),
-			// new byte[][][][]{SIDES_4_PATTERN, SIDES_3_PATTERN},
-			// 3.0,
-			// -0.01,
-			// 6,
-			// new Color[]{Color.WHITE, Color.GREEN, Color.RED, Color.WHITE,
-			// Color.GREEN,
-			// Color.RED}, 1,
+			// 2, (4 * 3), new byte[][][][] { SIDES_4_PATTERN, SIDES_3_PATTERN }, 3.0,
+			// -0.01, 6,
+			// new Color[] { Color.WHITE, Color.GREEN, Color.RED, Color.WHITE, Color.GREEN,
+			// Color.RED }, 1,
 
 			// /* Six details with recursive level of three. */
 			// 3,
@@ -177,18 +172,28 @@ public class Main {
 			// Color.RED}, 1,
 
 			// /* One detail with recursive level of three. */
-			// 3, (3 * 4 * 5), new byte[][][][] { SIDES_3_PATTERN,
-			// SIDES_4_PATTERN, SIDES_5_PATTERN }, 1.0, +0.001, 1,
+			// 3, (3 * 4 * 5), new byte[][][][] { SIDES_3_PATTERN, SIDES_4_PATTERN,
+			// SIDES_5_PATTERN }, 1.0, +0.001, 1,
 			// new Color[] { Color.WHITE }, 1,
+
+			// /* One detail with recursive level of three. */
+			// 3, (5 * 4 * 3), new byte[][][][] { SIDES_5_PATTERN, SIDES_4_PATTERN,
+			// SIDES_3_PATTERN }, 1.0, +0.001, 1,
+			// new Color[] { Color.WHITE }, 1,
+
+			/* One detail with recursive level of three. */
+			3, (7 * 5 * 3), new byte[][][][] { SIDES_7_PATTERN, SIDES_5_PATTERN, SIDES_3_PATTERN }, 1.0, +0.001, 1,
+			new Color[] { Color.WHITE }, 1,
 
 			// /* One detail with recursive level of four. */
 			// 4, (3 * 4 * 5 * 6), new byte[][][][] { SIDES_3_PATTERN, SIDES_4_PATTERN,
 			// SIDES_5_PATTERN, SIDES_6_PATTERN },
 			// 1.0, +0.001, 1, new Color[] { Color.WHITE }, 1,
 
-			/* One detail with recursive level of four. */
-			4, (6 * 5 * 4 * 3), new byte[][][][] { SIDES_6_PATTERN, SIDES_5_PATTERN, SIDES_4_PATTERN, SIDES_3_PATTERN },
-			1.0, +0.001, 1, new Color[] { Color.WHITE }, 1,
+			// /* One detail with recursive level of four. */
+			// 4, (6 * 5 * 4 * 3), new byte[][][][] { SIDES_6_PATTERN, SIDES_5_PATTERN,
+			// SIDES_4_PATTERN, SIDES_3_PATTERN },
+			// 1.0, +0.001, 1, new Color[] { Color.WHITE }, 1,
 
 			// /* One detail with recursive level of four. */
 			// 4, (3 * 4 * 4 * 5), new byte[][][][] { SIDES_3_PATTERN,
@@ -299,13 +304,9 @@ public class Main {
 		// кубовете да не бъдат двойни, а да бъдат единични.
 
 		int length = SIDES_PATTERNS[level - 1][0].length;
-		for (int x = sides[0], dx = (sides[1] - sides[0] + 1) / length; x <= sides[1]; x += dx) {
-			int a = (x - sides[0]) / (dx);
-			for (int y = sides[2], dy = (sides[3] - sides[2] + 1) / length; y <= sides[3]; y += dy) {
-				int b = (y - sides[2]) / (dy);
-				for (int z = sides[4], dz = (sides[5] - sides[4] + 1) / length; z <= sides[5]; z += dz) {
-					int c = (z - sides[4]) / (dz);
-
+		for (int a = 0, x = sides[0], dx = (sides[1] - sides[0] + 1) / length; x <= sides[1]; x += dx, a++) {
+			for (int b = 0, y = sides[2], dy = (sides[3] - sides[2] + 1) / length; y <= sides[3]; y += dy, b++) {
+				for (int c = 0, z = sides[4], dz = (sides[5] - sides[4] + 1) / length; z <= sides[5]; z += dz, c++) {
 					if (SIDES_PATTERNS[level - 1][a][b][c] == 1) {
 						cube(level - 1, new int[] { x, x + dx - 1, y, y + dy - 1, z, z + dz - 1 });
 					} else if (SIDES_PATTERNS[level - 1][a][b][c] == 0) {
