@@ -181,14 +181,14 @@ public class Main {
 			// SIDES_4_PATTERN, SIDES_5_PATTERN }, 1.0, +0.001, 1,
 			// new Color[] { Color.WHITE }, 1,
 
-			/* One detail with recursive level of four. */
-			4, (3 * 4 * 5 * 6), new byte[][][][] { SIDES_3_PATTERN, SIDES_4_PATTERN, SIDES_5_PATTERN, SIDES_6_PATTERN },
-			1.0, +0.001, 1, new Color[] { Color.WHITE }, 1,
-
 			// /* One detail with recursive level of four. */
-			// 4, (6 * 5 * 4 * 3), new byte[][][][] { SIDES_6_PATTERN, SIDES_5_PATTERN,
-			// SIDES_4_PATTERN, SIDES_3_PATTERN },
-			// 1.0, +0.001, 1, new Color[] { Color.WHITE }, 27,
+			// 4, (3 * 4 * 5 * 6), new byte[][][][] { SIDES_3_PATTERN, SIDES_4_PATTERN,
+			// SIDES_5_PATTERN, SIDES_6_PATTERN },
+			// 1.0, +0.001, 1, new Color[] { Color.WHITE }, 1,
+
+			/* One detail with recursive level of four. */
+			4, (6 * 5 * 4 * 3), new byte[][][][] { SIDES_6_PATTERN, SIDES_5_PATTERN, SIDES_4_PATTERN, SIDES_3_PATTERN },
+			1.0, +0.001, 1, new Color[] { Color.WHITE }, 1,
 
 			// /* One detail with recursive level of four. */
 			// 4, (3 * 4 * 4 * 5), new byte[][][][] { SIDES_3_PATTERN,
