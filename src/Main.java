@@ -327,28 +327,41 @@ public class Main {
 			return;
 		}
 
-		// TODO Да се модифицира рекурсивната процедура, така че вътрешните стени на
-		// кубовете да не бъдат двойни, а да бъдат единични.
-
+		/*
+		 * Initial variables.
+		 */
 		int length = SIDES_PATTERNS[level - 1][0].length;
-		for (int a = 0, x = sides[0], dx = (sides[1] - sides[0] + 1) / length; a < length; x += dx, a++) {
-			for (int b = 0, y = sides[2], dy = (sides[3] - sides[2] + 1) / length; b < length; y += dy, b++) {
-				for (int c = 0, z = sides[4], dz = (sides[5] - sides[4] + 1) / length; c < length; z += dz, c++) {
-					if (SIDES_PATTERNS[level - 1][a][b][c] == 1) {
-						cube(level - 1, new int[] { x, x + dx - 1, y, y + dy - 1, z, z + dz - 1 });
+		int dx = (sides[1] - sides[0] + 1) / length;
+		int dy = (sides[3] - sides[2] + 1) / length;
+		int dz = (sides[5] - sides[4] + 1) / length;
+
+		/*
+		 * Loop in the cube volume.
+		 */
+		for (int a = 0, x = sides[0]; a < length; x += dx, a++) {
+			for (int b = 0, y = sides[2]; b < length; y += dy, b++) {
+				for (int c = 0, z = sides[4]; c < length; z += dz, c++) {
+					if (SIDES_PATTERNS[level - 1][a][b][c] == 0) {
+						continue;
 					}
 
-					if (SIDES_PATTERNS[level - 1][a][b][c] == 2) {
-						if (b == 0 || b == length - 1 || c == 0 || c == length - 1) {
-							cube(level - 1, new int[] { x, x + dx - 1, y, y + dy - 1, z, z + dz - 1 });
-						} else if (a == 0 || a == length - 1 || c == 0 || c == length - 1) {
-							cube(level - 1, new int[] { x, x + dx - 1, y, y + dy - 1, z, z + dz - 1 });
-						} else if (a == 0 || a == length - 1 || b == 0 || b == length - 1) {
-							cube(level - 1, new int[] { x, x + dx - 1, y, y + dy - 1, z, z + dz - 1 });
-						} else {
-							cube(level - 1, new int[] { x, x + dx - 1, y, y + dy - 1, z, z + dz - 1 });
-						}
-					}
+					// TODO Да се модифицира рекурсивната процедура, така че вътрешните стени на
+					// кубовете да не бъдат двойни, а да бъдат единични.
+
+					// if (a != 0 && (b == 0 || b == length - 1 || c == 0 || c == length - 1)) {
+					// cube(level - 1, new int[] { x - dx, x, y, y + dy - 1, z, z + dz - 1 });
+					// continue;
+					// }
+					// if (b != 0 && (a == 0 || a == length - 1 || c == 0 || c == length - 1)) {
+					// cube(level - 1, new int[] { x, x + dx - 1, y - dy, y, z, z + dz - 1 });
+					// continue;
+					// }
+					// if (c != 0 && (a == 0 || a == length - 1 || b == 0 || b == length - 1)) {
+					// cube(level - 1, new int[] { x, x + dx - 1, y, y + dy - 1, z - dz, z });
+					// continue;
+					// }
+
+					cube(level - 1, new int[] { x, x + dx - 1, y, y + dy - 1, z, z + dz - 1 });
 				}
 			}
 		}
