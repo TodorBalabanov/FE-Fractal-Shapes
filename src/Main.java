@@ -137,27 +137,29 @@ public class Main {
 			// Color.RED}, 1,
 
 			// /* One detail with recursive level of two. */
-			// 2, (4 * 3), new byte[][][][] { SIDES_4_PATTERN, SIDES_3_PATTERN }, 3.0,
+			// 2, (3 * 3), new byte[][][][] { SIDES_3_PATTERN, SIDES_3_PATTERN
+			// }, 3.0, +0.001, 1,
+			// new Color[] { Color.WHITE }, 1,
+
+			// /* One detail with recursive level of two. */
+			// 2, (4 * 3), new byte[][][][] { SIDES_4_PATTERN, SIDES_3_PATTERN
+			// }, 3.0,
 			// +0.001, 1,
 			// new Color[] { Color.WHITE }, 1,
 
 			// /* Six details with recursive level of two. */
-			// 2, (4 * 3), new byte[][][][] { SIDES_4_PATTERN, SIDES_3_PATTERN }, 3.0,
+			// 2, (4 * 3), new byte[][][][] { SIDES_4_PATTERN, SIDES_3_PATTERN
+			// }, 3.0,
 			// -0.01, 6,
-			// new Color[] { Color.WHITE, Color.GREEN, Color.RED, Color.WHITE, Color.GREEN,
+			// new Color[] { Color.WHITE, Color.GREEN, Color.RED, Color.WHITE,
+			// Color.GREEN,
 			// Color.RED }, 1,
 
 			// /* Six details with recursive level of three. */
-			// 3,
-			// (5 * 4 * 3),
-			// new byte[][][][]{SIDES_5_PATTERN, SIDES_4_PATTERN,
-			// SIDES_3_PATTERN},
-			// 3.0,
-			// -0.01,
-			// 6,
-			// new Color[]{Color.WHITE, Color.GREEN, Color.RED, Color.WHITE,
-			// Color.GREEN,
-			// Color.RED}, 1,
+			// 3, (5 * 4 * 3), new byte[][][][] { SIDES_5_PATTERN,
+			// SIDES_4_PATTERN, SIDES_3_PATTERN }, 3.0, -0.01, 6,
+			// new Color[] { Color.WHITE, Color.GREEN, Color.RED, Color.WHITE,
+			// Color.GREEN, Color.RED }, 1,
 
 			// /* Six details with recursive level of three. */
 			// 3,
@@ -172,37 +174,47 @@ public class Main {
 			// Color.RED}, 1,
 
 			// /* One detail with recursive level of three. */
-			// 3, (3 * 4 * 5), new byte[][][][] { SIDES_3_PATTERN, SIDES_4_PATTERN,
+			// 3, (3 * 4 * 5), new byte[][][][] { SIDES_3_PATTERN,
+			// SIDES_4_PATTERN,
 			// SIDES_5_PATTERN }, 1.0, +0.001, 1,
 			// new Color[] { Color.WHITE }, 1,
 
 			// /* One detail with recursive level of three. */
-			// 3, (5 * 4 * 3), new byte[][][][] { SIDES_5_PATTERN, SIDES_4_PATTERN,
+			// 3, (5 * 4 * 3), new byte[][][][] { SIDES_5_PATTERN,
+			// SIDES_4_PATTERN, SIDES_3_PATTERN }, 1.0, +0.001, 1,
+			// new Color[] { Color.WHITE }, 1,
+
+			// /* One detail with recursive level of three. */
+			// 3, (7 * 5 * 3), new byte[][][][] { SIDES_7_PATTERN,
+			// SIDES_5_PATTERN,
 			// SIDES_3_PATTERN }, 1.0, +0.001, 1,
 			// new Color[] { Color.WHITE }, 1,
 
 			// /* One detail with recursive level of three. */
-			// 3, (7 * 5 * 3), new byte[][][][] { SIDES_7_PATTERN, SIDES_5_PATTERN,
-			// SIDES_3_PATTERN }, 1.0, +0.001, 1,
-			// new Color[] { Color.WHITE }, 1,
-
-			// /* One detail with recursive level of three. */
-			// 3, (3 * 5 * 7), new byte[][][][] { SIDES_3_PATTERN, SIDES_5_PATTERN,
+			// 3, (3 * 5 * 7), new byte[][][][] { SIDES_3_PATTERN,
+			// SIDES_5_PATTERN,
 			// SIDES_7_PATTERN }, 1.0, +0.001, 1,
 			// new Color[] { Color.WHITE }, 1,
 
 			// /* One detail with recursive level of four. */
-			// 4, (3 * 4 * 5 * 6), new byte[][][][] { SIDES_3_PATTERN, SIDES_4_PATTERN,
+			// 4, (3 * 4 * 5 * 6), new byte[][][][] { SIDES_3_PATTERN,
+			// SIDES_4_PATTERN,
 			// SIDES_5_PATTERN, SIDES_6_PATTERN },
 			// 1.0, +0.001, 1, new Color[] { Color.WHITE }, 1,
 
 			// /* One detail with recursive level of four. */
-			// 4, (6 * 5 * 4 * 3), new byte[][][][] { SIDES_6_PATTERN, SIDES_5_PATTERN,
+			// 4, (6 * 5 * 4 * 3), new byte[][][][] { SIDES_6_PATTERN,
+			// SIDES_5_PATTERN,
 			// SIDES_4_PATTERN, SIDES_3_PATTERN },
 			// 1.0, +0.001, 1, new Color[] { Color.WHITE }, 27,
 
+			// /* One detail with recursive level of four. */
+			// 4, (3 * 4 * 4 * 5), new byte[][][][] { SIDES_3_PATTERN,
+			// SIDES_4_PATTERN, SIDES_4_PATTERN, SIDES_5_PATTERN },
+			// 1.0, +0.001, 1, new Color[] { Color.WHITE }, 1,
+
 			/* One detail with recursive level of four. */
-			4, (3 * 4 * 4 * 5), new byte[][][][] { SIDES_3_PATTERN, SIDES_4_PATTERN, SIDES_4_PATTERN, SIDES_5_PATTERN },
+			4, (5 * 4 * 4 * 3), new byte[][][][] { SIDES_5_PATTERN, SIDES_4_PATTERN, SIDES_4_PATTERN, SIDES_3_PATTERN },
 			1.0, +0.001, 1, new Color[] { Color.WHITE }, 1,
 
 	};
@@ -228,8 +240,8 @@ public class Main {
 	private static final double VOXEL_SCALE = (Double) PARAMETERS[3];
 
 	/**
-	 * Space between two voxels. If it is negative there is space, if it is positive
-	 * there is overlap.
+	 * Space between two voxels. If it is negative there is space, if it is
+	 * positive there is overlap.
 	 */
 	private static final double VOXEL_DELTA = (Double) PARAMETERS[4];
 
@@ -337,30 +349,16 @@ public class Main {
 		/*
 		 * Loop in the cube volume.
 		 */
-		for (int a = 0, x = sides[0]; a < length; x += dx, a++) {
-			for (int b = 0, y = sides[2]; b < length; y += dy, b++) {
-				for (int c = 0, z = sides[4]; c < length; z += dz, c++) {
+		for (int a = 0, sx = sides[0], ex = sx + dx - 1; a < length; sx += dx, ex += dx, a++) {
+			for (int b = 0, sy = sides[2], ey = sy + dy - 1; b < length; sy += dy, ey += dy, b++) {
+				for (int c = 0, sz = sides[4], ez = sz + dz - 1; c < length; sz += dz, ez += dz, c++) {
 					if (SIDES_PATTERNS[level - 1][a][b][c] == 0) {
 						continue;
 					}
 
-					// TODO Да се модифицира рекурсивната процедура, така че вътрешните стени на
-					// кубовете да не бъдат двойни, а да бъдат единични.
+					// TODO Double sides inside the cube should be single.
 
-					// if (a != 0 && (b == 0 || b == length - 1 || c == 0 || c == length - 1)) {
-					// cube(level - 1, new int[] { x - dx, x, y, y + dy - 1, z, z + dz - 1 });
-					// continue;
-					// }
-					// if (b != 0 && (a == 0 || a == length - 1 || c == 0 || c == length - 1)) {
-					// cube(level - 1, new int[] { x, x + dx - 1, y - dy, y, z, z + dz - 1 });
-					// continue;
-					// }
-					// if (c != 0 && (a == 0 || a == length - 1 || b == 0 || b == length - 1)) {
-					// cube(level - 1, new int[] { x, x + dx - 1, y, y + dy - 1, z - dz, z });
-					// continue;
-					// }
-
-					cube(level - 1, new int[] { x, x + dx - 1, y, y + dy - 1, z, z + dz - 1 });
+					cube(level - 1, new int[] { sx, ex, sy, ey, sz, ez });
 				}
 			}
 		}
@@ -369,8 +367,8 @@ public class Main {
 	/**
 	 * Calculate volume of the 2D shape.
 	 * 
-	 * @return Array of values with the amount of empty space, amount of occupied
-	 *         space and total space.
+	 * @return Array of values with the amount of empty space, amount of
+	 *         occupied space and total space.
 	 */
 	private static int[] volume() {
 		int counters[] = { 0, 0, 0 };
